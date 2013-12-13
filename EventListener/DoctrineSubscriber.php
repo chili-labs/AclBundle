@@ -1,67 +1,54 @@
 <?php
 
-namespace Oneup\AclBundle\EventListener;
+namespace ProjectA\Bundle\AclBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * EventSubscriber for doctrine that removes acl entries on
+ * removal of the referenced domain object.
+ *
+ * This subscriber is not bound to any specific object mapper,
+ * but you will need to install either one to get this working.
+ * For example ORM or ODM
+ *
+ * @author Daniel Tschinder <daniel.tschinder@project-a.com>
+ */
 class DoctrineSubscriber implements EventSubscriber
 {
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    public function postPersist(LifecycleEventArgs $args)
-    {
-        $chain = $this->container->get('oneup_acl.driver_chain');
-        $manager = $this->container->get('oneup_acl.manager');
-
-        $entity = $args->getObject();
-        $object = new \ReflectionClass($entity);
-
-        $metaData = $chain->readMetaData($object);
-
-        if (!empty($metaData)) {
-            // add class permissions
-            foreach ($metaData['permissions'] as $permission) {
-                $manager->addClassPermission($entity, $permission[1], $permission[0]);
-            }
-
-            // add property permissions
-            foreach ($metaData['properties'] as $name => $property) {
-                $manager->addClassFieldPermission($entity, $name, $property[1], $property[0]);
-            }
-        }
-    }
-
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function preRemove(LifecycleEventArgs $args)
     {
-        $chain = $this->container->get('oneup_acl.driver_chain');
-        $manager = $this->container->get('oneup_acl.manager');
-        $remove = $this->container->getParameter('oneup_acl.remove_orphans');
+        $manager = $this->container->get('projecta_acl.objectmanager');
+        $remove = $this->container->getParameter('projecta_acl.remove_orphans');
 
-        $entity = $args->getObject();
-        $object = new \ReflectionClass($entity);
-
-        $metaData = $chain->readMetaData($object);
-
-        if (($remove && (!isset($metaData['remove']) || $metaData['remove'])) ||
-            (!$remove && isset($metaData['remove']) && $metaData['remove'])
-        ) {
-            $manager->revokeAllObjectPermissions($entity);
-            $manager->revokeAllObjectFieldPermissions($entity);
+        if ($remove) {
+            $manager->deleteAcl($args->getObject());
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSubscribedEvents()
     {
-        return array(
-            'postPersist',
-            'preRemove'
-        );
+        return array('preRemove');
     }
 }

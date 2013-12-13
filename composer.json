@@ -1,9 +1,9 @@
 {
-    "name": "oneup/acl-bundle",
+    "name": "project-a/acl-bundle",
     "type": "symfony-bundle",
     "description": "The missing link between Symfony`s Acl implementation and your application.",
     "keywords": ["symfony2", "acl", "security"],
-    "homepage": "http://1up.io",
+    "homepage": "http://www.project-a.com",
     "license": "MIT",
     "authors": [
         {
@@ -17,34 +17,35 @@
             "email": "dg@1up.io",
             "homepage": "http://1up.io",
             "role": "Developer"
+        },
+        {
+            "name": "Daniel Tschinder",
+            "email": "daniel.tschinder@project-a.com",
+            "homepage": "http://www.project-a.com",
+            "role": "Senior Developer"
         }
     ],
-
     "require": {
-        "symfony/framework-bundle": ">=2.2",
-        "symfony/security-bundle": ">=2.2",
-        "symfony/expression-language": "~2.4",
-        "doctrine/doctrine-bundle": "1.2.*@dev",
-        "doctrine/common": "~2.2",
-        "doctrine/dbal": "~2.2"
+        "php": ">=5.3.0",
+        "symfony/framework-bundle": ">=2.2,<2.5-dev",
+        "symfony/security": ">=2.2,<2.5-dev",
+        "symfony/doctrine-bridge": ">=2.2,<2.5-dev",
+        "doctrine/common": "~2.2"
     },
-
     "require-dev": {
-        "symfony/finder": ">=2.0.16,<2.4-dev",
-        "symfony/browser-kit": "2.*",
-        "sensio/framework-extra-bundle": "~2.2",
+        "symfony/finder": ">=2.2,<2.5-dev",
+        "symfony/browser-kit": ">=2.2,<2.5-dev",
         "doctrine/orm": "~2.2",
-        "phpunit/phpunit": "3.7.*"
+        "doctrine/mongodb-odm": "~1.0",
+        "phpunit/phpunit": "~3.7",
+        "satooshi/php-coveralls": "*"
     },
-
     "suggest": {
-        "sensio/framework-extra-bundle": "Allows you to use controller annotations.",
-        "doctrine/orm": "Allows you to remove Acl entries automatically."
+        "doctrine/orm": "Allows you to remove Acl entries automatically.",
+        "doctrine/mongodb-odm": "Allows you to remove Acl entries automatically."
     },
-
     "autoload": {
-        "psr-0": { "Oneup\\AclBundle": "" }
+        "psr-0": { "ProjectA\\Bundle\\AclBundle": "" }
     },
-
-    "target-dir": "Oneup/AclBundle"
+    "target-dir": "ProjectA/Bundle/AclBundle"
 }

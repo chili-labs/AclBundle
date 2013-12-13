@@ -1,41 +1,47 @@
-OneupAclBundle
-==============
+# ProjectA AclBundle
+###### Bundle for Symfony2 providing easy access to the complexe ACL subsystem
 
-The OneupAclBundle provides easy to use Acl features for your Symfony2 application. It is built on top of the Security component and comes with
-handy features including:
+[![Latest Stable Version](https://poser.pugx.org/project-a/AclBundle/v/stable.png)](https://packagist.org/packages/project-a/AclBundle) [![Latest Unstable Version](https://poser.pugx.org/project-a/AclBundle/v/unstable.png)](https://packagist.org/packages/project-a/AclBundle) [![Total Downloads](https://poser.pugx.org/project-a/AclBundle/downloads.png)](https://packagist.org/packages/project-a/AclBundle) [![Build Status](https://secure.travis-ci.org/project-a/AclBundle.png?branch=master)](http://travis-ci.org/project-a/AclBundle) [![Coverage Status](https://coveralls.io/repos/project-a/AclBundle/badge.png?branch=master)](https://coveralls.io/r/project-a/AclBundle?branch=master)
 
-* an [Acl manager](https://github.com/1up-lab/OneupAclBundle/blob/master/Resources/doc/manager.md), your entry point.
-* [Doctrine listeners](https://github.com/1up-lab/OneupAclBundle/blob/master/Resources/doc/removal.md) for automatically remove Acl entries once an entity is deleted.
-* [Check request parameters](https://github.com/1up-lab/OneupAclBundle/blob/master/Resources/doc/controller.md) against your access control lists.
+## Description
 
-[![Build Status](https://travis-ci.org/1up-lab/OneupAclBundle.png)](https://travis-ci.org/1up-lab/OneupAclBundle)
-[![Dependencies Status](https://d2xishtp1ojlk0.cloudfront.net/d/11720473)](http://depending.in/1up-lab/OneupAclBundle)
-[![Total Downloads](https://poser.pugx.org/oneup/acl-bundle/downloads.png)](https://packagist.org/packages/oneup/acl-bundle)
+WIP
 
-Documentation
--------------
+## Installation
 
-The entry point of the documentation can be found in the file `Resources/docs/index.md`
+The recommended way to install the AclBundle is [through
+composer](http://getcomposer.org). Just create a `composer.json` file and
+run the `php composer.phar install` command to install it:
 
-[Read the documentation for master](https://github.com/1up-lab/OneupAclBundle/blob/master/Resources/doc/index.md)
+    {
+        "require": {
+            "project-a/acl-bundle": "~1.0"
+        }
+    }
 
-Upgrade Notes
--------------
-* First feature complete version **v0.9.0**
+Alternatively, you can download the [`silexrouting.zip`][1] file and extract it.
 
-License
--------
+## Usage
 
-This bundle is under the MIT license. See the complete license in the bundle:
+WIP
 
-    Resources/meta/LICENSE
+## Tests
 
-Reporting an issue or a feature request
----------------------------------------
+To run the test suite, you need [composer](http://getcomposer.org).
 
-Issues and feature requests are tracked in the [Github issue tracker](https://github.com/1up-lab/OneupAclBundle/issues).
+    $ php composer.phar install --dev
+    $ vendor/bin/phpunit
 
-When reporting a bug, it may be a good idea to reproduce it in a basic project
-built using the [Symfony Standard Edition](https://github.com/symfony/symfony-standard)
-to allow developers of the bundle to reproduce the issue by simply cloning it
-and following some steps.
+## License
+
+ProjectA AclBundle is licensed under the MIT license.
+
+## More about Project A Ventures
+
+[www.project-a.com](http://www.project-a.com/en/working-with-project-a/)
+
+[1]: https://github.com/project-a/AclBundle/archive/master.zip
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/project-a/aclbundle/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

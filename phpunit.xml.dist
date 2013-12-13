@@ -4,9 +4,9 @@
     <php>
         <server name="KERNEL_DIR" value="Tests/App" />
     </php>
-        
+
     <testsuites>
-        <testsuite name="OneupAclBundle test suite">
+        <testsuite name="ProjectAAclBundle test suite">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>

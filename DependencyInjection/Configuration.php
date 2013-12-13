@@ -1,21 +1,24 @@
 <?php
 
-namespace Oneup\AclBundle\DependencyInjection;
+namespace ProjectA\Bundle\AclBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+/**
+ * @author Daniel Tschinder <daniel.tschinder@project-a.com>
+ */
 class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('oneup_acl');
+        $rootNode = $treeBuilder->root('project_a_acl');
 
         $rootNode
             ->children()
                 ->booleanNode('remove_orphans')->defaultTrue()->end()
-                ->enumNode('permission_strategy')
+                ->enumNode('default_strategy')
                     ->values(array('any', 'all', 'equal'))
                     ->defaultValue('all')
                 ->end()

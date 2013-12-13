@@ -1,14 +1,16 @@
 <?php
 
-namespace Oneup\AclBundle\DependencyInjection;
+namespace ProjectA\Bundle\AclBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\Security\Acl\Domain\PermissionGrantingStrategy;
 
-class OneupAclExtension extends Extension
+/**
+ * @author Daniel Tschinder <daniel.tschinder@project-a.com>
+ */
+class ProjectAAclExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -16,22 +18,17 @@ class OneupAclExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('security.xml');
-        $loader->load('driver.xml');
+        $loader->load('acl.xml');
         $loader->load('doctrine.xml');
-
-        if (class_exists('Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle')) {
-            $loader->load('configuration.xml');
-        }
 
         $strategy = constant(
             sprintf(
                 'Symfony\Component\Security\Acl\Domain\PermissionGrantingStrategy::%s',
-                strtoupper($config['permission_strategy'])
+                strtoupper($config['default_strategy'])
             )
         );
 
-        $container->setParameter('oneup_acl.remove_orphans', $config['remove_orphans']);
-        $container->setParameter('oneup_acl.permission_strategy', $strategy);
+        $container->setParameter('projecta_acl.remove_orphans', $config['remove_orphans']);
+        $container->setParameter('projecta_acl.default_strategy', $strategy);
     }
 }
