@@ -7,18 +7,6 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Jim Schmid",
-            "email": "js@1up.io",
-            "homepage": "http://1up.io",
-            "role": "Developer"
-        },
-        {
-            "name": "David Greminger",
-            "email": "dg@1up.io",
-            "homepage": "http://1up.io",
-            "role": "Developer"
-        },
-        {
             "name": "Daniel Tschinder",
             "email": "daniel.tschinder@project-a.com",
             "homepage": "http://www.project-a.com",
@@ -47,5 +35,10 @@
     "autoload": {
         "psr-0": { "ProjectA\\Bundle\\AclBundle": "" }
     },
-    "target-dir": "ProjectA/Bundle/AclBundle"
+    "target-dir": "ProjectA/Bundle/AclBundle",
+    "extra": {
+       "branch-alias": {
+           "dev-master": "1.0.x-dev"
+        }
+    }
 }
