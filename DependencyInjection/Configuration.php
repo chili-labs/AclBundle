@@ -13,7 +13,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('project_a_acl');
+        $rootNode = $treeBuilder->root('projecta_acl');
 
         $rootNode
             ->children()
