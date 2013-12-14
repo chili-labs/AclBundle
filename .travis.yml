@@ -1,15 +1,18 @@
 language: php
 
 env:
+    - SYMFONY_DEPS_VERSION=2.1
     - SYMFONY_DEPS_VERSION=2.2
     - SYMFONY_DEPS_VERSION=2.3
     - SYMFONY_DEPS_VERSION=2.4
 
 before_script:
     - composer self-update
-    - sh -c "if [ '$SYMFONY_DEPS_VERSION' = '2.2' ]; then sed -i 's/>=2.2,<2.5-dev/2.2.*/g' composer.json; fi"
-    - sh -c "if [ '$SYMFONY_DEPS_VERSION' = '2.3' ]; then sed -i 's/>=2.2,<2.5-dev/2.3.*/g' composer.json; fi"
-    - sh -c "if [ '$SYMFONY_DEPS_VERSION' = '2.4' ]; then sed -i 's/>=2.2,<2.5-dev/2.4.*/g' composer.json; fi"
+    - sh -c "if [ '$SYMFONY_DEPS_VERSION' = '2.1' ]; then sed -i 's/~2.1/2.1.*/g' composer.json; fi"
+    - sh -c "if [ '$SYMFONY_DEPS_VERSION' = '2.2' ]; then sed -i 's/~2.1/2.2.*/g' composer.json; fi"
+    - sh -c "if [ '$SYMFONY_DEPS_VERSION' = '2.3' ]; then sed -i 's/~2.1/2.3.*/g' composer.json; fi"
+    - sh -c "if [ '$SYMFONY_DEPS_VERSION' = '2.4' ]; then sed -i 's/~2.1/2.4.*/g' composer.json; fi"
+    - sh -c "if [ '$SYMFONY_DEPS_VERSION' -lt '2.4' ]; then sed -i 's/"symfony/expression-language": "~2.4",//g' composer.json; fi"
 #    - sh -c "if [ '${TRAVIS_PHP_VERSION:0:3}' = '5.3' ]; then sed -i 's~</whitelist>~<exclude><file>src/SilexRouting/Application/RoutingTrait.php</file></exclude></whitelist>~g' phpunit.xml.dist; fi"
     - composer update --prefer-source
 
