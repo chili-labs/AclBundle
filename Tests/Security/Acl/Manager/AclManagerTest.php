@@ -4,7 +4,7 @@ namespace Oneup\AclBundle\Tests\Security\Acl\Manager;
 
 use Oneup\AclBundle\Tests\Model\AbstractSecurityTest;
 
-class AclManagerTest extends AbstractSecurityTest
+class AclManagerTest //extends AbstractSecurityTest
 {
     public function testIfPreloadFailsGracefullyIfNothingToLoad()
     {

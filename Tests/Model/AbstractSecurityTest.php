@@ -1,18 +1,28 @@
 <?php
 
-namespace Oneup\AclBundle\Tests\Model;
+namespace ProjectA\Bundle\AclBundle\Tests\Model;
 
+use ProjectA\Bundle\AclBundle\Security\Acl\Manager\ClassManager;
+use ProjectA\Bundle\AclBundle\Security\Acl\Manager\ObjectManager;
 use Symfony\Component\Security\Acl\Dbal\Schema;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
-use Oneup\AclBundle\Tests\Model\SomeObject;
 
 abstract class AbstractSecurityTest extends WebTestCase
 {
     protected $client;
     protected $container;
-    protected $manager;
+
+    /**
+     * @var ObjectManager
+     */
+    protected $objectmanager;
+
+    /**
+     * @var ClassManager
+     */
+    protected $classmanager;
 
     protected $object1;
     protected $object2;
@@ -47,7 +57,8 @@ abstract class AbstractSecurityTest extends WebTestCase
             $this->connection->exec($sql);
         }
 
-        $this->manager = $this->container->get('oneup_acl.manager');
+        $this->objectmanager = $this->container->get('projecta_acl.objectmanager');
+        $this->classmanager = $this->container->get('projecta_acl.classmanager');
 
         $this->object1 = new SomeObject(1);
         $this->object2 = new SomeObject(2);
@@ -68,11 +79,6 @@ abstract class AbstractSecurityTest extends WebTestCase
         ;
 
         $this->mask2 = $builder2->get();
-    }
-
-    protected function getManager()
-    {
-        return $this->manager;
     }
 
     protected function getToken()

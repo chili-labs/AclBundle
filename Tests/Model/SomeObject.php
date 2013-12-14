@@ -1,29 +1,13 @@
 <?php
 
-namespace Oneup\AclBundle\Tests\Model;
+namespace ProjectA\Bundle\AclBundle\Tests\Model;
 
-use Oneup\AclBundle\Mapping\Annotation\DomainObject;
-use Oneup\AclBundle\Mapping\Annotation\ClassPermission;
-use Oneup\AclBundle\Mapping\Annotation\PropertyPermission;
-
-/**
- * Masks from Symfony\Component\Security\Acl\Permission\MaskBuilder
- */
-
-/**
- * @DomainObject(remove=true, {
- *   @ClassPermission({ "ROLE_USER" = 1 })
- * })
- */
 class SomeObject
 {
     private $id;
     private $foo;
     private $bar;
 
-    /**
-     * @PropertyPermission({ "ROLE_ADMIN" = 512 })
-     */
     private $secured;
 
     public function __construct($id, $foo = null, $bar = null)

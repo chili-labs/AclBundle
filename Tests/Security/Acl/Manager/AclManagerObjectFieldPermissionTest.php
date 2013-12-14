@@ -4,7 +4,7 @@ namespace Oneup\AclBundle\Tests\Security\Acl\Manager;
 
 use Oneup\AclBundle\Tests\Model\AbstractSecurityTest;
 
-class AclManagerObjectFieldPermissionTest extends AbstractSecurityTest
+class AclManagerObjectFieldPermissionTest //extends AbstractSecurityTest
 {
     public function testAddOfObjectFieldPermission()
     {

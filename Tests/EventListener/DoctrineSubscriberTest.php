@@ -2,8 +2,8 @@
 
 namespace Oneup\AclBundle\Tests\EventListener;
 
-use Oneup\AclBundle\Tests\Model\AbstractSecurityTest;
-use Oneup\AclBundle\Tests\Model\SomeObject;
+use ProjectA\Bundle\AclBundle\Tests\Model\AbstractSecurityTest;
+use ProjectA\Bundle\AclBundle\Tests\Model\SomeObject;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 class DoctrineSubscriberTest extends AbstractSecurityTest
@@ -14,32 +14,7 @@ class DoctrineSubscriberTest extends AbstractSecurityTest
     {
         parent::setUp();
 
-        $this->listener = $this->container->get('oneup_acl.doctrine_subscriber');
-    }
-
-    public function testPostPersistListener()
-    {
-        $this->markTestIncomplete();
-
-        $object = new SomeObject(1);
-
-        $this->assertFalse($this->manager->isGranted('VIEW', $object));
-        $this->assertFalse($this->manager->isGranted('EDIT', $object));
-
-        $args = $this->getMockBuilder('Doctrine\Common\Persistence\Event\LifecycleEventArgs')
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        $args->expects($this->any())
-            ->method('getObject')
-            ->will($this->returnValue($object))
-        ;
-
-        $this->listener->postPersist($args);
-
-        $this->assertTrue($this->manager->isGranted('VIEW', $object));
-        $this->assertFalse($this->manager->isGranted('EDIT', $object));
+        $this->listener = $this->container->get('projecta_acl.doctrine_subscriber');
     }
 
     public function testPreRemoveListener()
