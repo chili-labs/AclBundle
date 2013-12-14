@@ -9,7 +9,6 @@ framework:
     default_locale: en
     session: ~
     test: ~
-    trusted_hosts: ~
 
 security:
     acl:

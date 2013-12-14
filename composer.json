@@ -15,20 +15,20 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "symfony/framework-bundle": "~2.1",
-        "symfony/security": "~2.1",
-        "doctrine/common": "~2.2"
+        "doctrine/common": "~2.2",
+        "symfony/framework-bundle": "~2.3",
+        "symfony/security": "~2.3"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.0",
-        "symfony/security-bundle": "~2.1",
-        "symfony/expression-language": "~2.4",
-        "symfony/finder": "~2.1",
-        "symfony/browser-kit": "~2.1",
-        "doctrine/orm": "~2.2",
         "doctrine/mongodb-odm": "@dev",
+        "doctrine/orm": "~2.2",
         "phpunit/phpunit": "~3.7",
-        "satooshi/php-coveralls": "*"
+        "satooshi/php-coveralls": "*",
+        "symfony/browser-kit": "~2.3",
+        "symfony/expression-language": "~2.4",
+        "symfony/finder": "~2.3",
+        "symfony/security-bundle": "~2.3"
     },
     "suggest": {
         "doctrine/orm": "Allows you to remove Acl entries automatically.",
