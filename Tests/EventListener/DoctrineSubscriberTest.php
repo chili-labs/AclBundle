@@ -1,6 +1,16 @@
 <?php
 
-namespace Oneup\AclBundle\Tests\EventListener;
+/*
+ * This file is part of the ProjectA AclBundle.
+ *
+ * (c) 1up GmbH
+ * (c) Project A Ventures GmbH & Co. KG
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace ProjectA\AclBundle\Tests\EventListener;
 
 use ProjectA\Bundle\AclBundle\Tests\Model\AbstractSecurityTest;
 use ProjectA\Bundle\AclBundle\Tests\Model\SomeObject;
@@ -21,17 +31,17 @@ class DoctrineSubscriberTest extends AbstractSecurityTest
     {
         $object = new SomeObject(1);
 
-        $this->assertFalse($this->manager->isGranted('OWNER', $object));
-        $this->assertFalse($this->manager->isGranted('VIEW', $object, 'foo'));
-        $this->assertFalse($this->manager->isGranted('EDIT', $object, 'bar'));
+        $this->assertFalse($this->manager->isGranted('VIEW', $object));
+        $this->assertFalse($this->manager->isGranted('EDIT', $object, 'foo'));
+        $this->assertFalse($this->manager->isGranted('OWNER', $object, 'bar'));
 
-        $this->manager->addObjectPermission($object, MaskBuilder::MASK_OWNER);
-        $this->manager->addObjectFieldPermission($object, 'foo', MaskBuilder::MASK_VIEW);
-        $this->manager->addObjectFieldPermission($object, 'bar', MaskBuilder::MASK_EDIT);
+        $this->objectmanager->grant($object, MaskBuilder::MASK_VIEW, $this->token);
+        $this->objectmanager->grant($object, MaskBuilder::MASK_EDIT, $this->token, 'foo');
+        $this->objectmanager->grant($object, MaskBuilder::MASK_OWNER, $this->token, 'bar');
 
-        $this->assertTrue($this->manager->isGranted('OWNER', $object));
-        $this->assertTrue($this->manager->isGranted('VIEW', $object, 'foo'));
-        $this->assertTrue($this->manager->isGranted('EDIT', $object, 'bar'));
+        $this->assertTrue($this->manager->isGranted('VIEW', $object));
+        $this->assertTrue($this->manager->isGranted('EDIT', $object, 'foo'));
+        $this->assertTrue($this->manager->isGranted('OWNER', $object, 'bar'));
 
         $args = $this->getMockBuilder('Doctrine\Common\Persistence\Event\LifecycleEventArgs')
             ->disableOriginalConstructor()
@@ -45,8 +55,8 @@ class DoctrineSubscriberTest extends AbstractSecurityTest
 
         $this->listener->preRemove($args);
 
-        $this->assertFalse($this->manager->isGranted('OWNER', $object));
-        $this->assertFalse($this->manager->isGranted('VIEW', $object, 'foo'));
-        $this->assertFalse($this->manager->isGranted('EDIT', $object, 'bar'));
+        $this->assertFalse($this->manager->isGranted('VIEW', $object));
+        $this->assertFalse($this->manager->isGranted('EDIT', $object, 'foo'));
+        $this->assertFalse($this->manager->isGranted('OWNER', $object, 'bar'));
     }
 }

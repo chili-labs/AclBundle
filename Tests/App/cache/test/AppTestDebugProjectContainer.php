@@ -54,9 +54,11 @@ class AppTestDebugProjectContainer extends Container
             'http_kernel' => 'getHttpKernelService',
             'kernel' => 'getKernelService',
             'locale_listener' => 'getLocaleListenerService',
-            'projecta_acl.classmanager' => 'getProjectaAcl_ClassmanagerService',
+            'projecta_acl.ace.classmanager' => 'getProjectaAcl_Ace_ClassmanagerService',
+            'projecta_acl.ace.objectmanager' => 'getProjectaAcl_Ace_ObjectmanagerService',
+            'projecta_acl.acl.collection_cache' => 'getProjectaAcl_Acl_CollectionCacheService',
             'projecta_acl.doctrine_subscriber' => 'getProjectaAcl_DoctrineSubscriberService',
-            'projecta_acl.objectmanager' => 'getProjectaAcl_ObjectmanagerService',
+            'projecta_acl.manager' => 'getProjectaAcl_ManagerService',
             'property_accessor' => 'getPropertyAccessorService',
             'request' => 'getRequestService',
             'request_stack' => 'getRequestStackService',
@@ -70,6 +72,7 @@ class AppTestDebugProjectContainer extends Container
             'security.acl.dbal.schema_listener' => 'getSecurity_Acl_Dbal_SchemaListenerService',
             'security.acl.object_identity_retrieval_strategy' => 'getSecurity_Acl_ObjectIdentityRetrievalStrategyService',
             'security.acl.provider' => 'getSecurity_Acl_ProviderService',
+            'security.acl.security_identity_retrieval_strategy' => 'getSecurity_Acl_SecurityIdentityRetrievalStrategyService',
             'security.authentication.manager' => 'getSecurity_Authentication_ManagerService',
             'security.authentication.trust_resolver' => 'getSecurity_Authentication_TrustResolverService',
             'security.context' => 'getSecurity_ContextService',
@@ -77,6 +80,7 @@ class AppTestDebugProjectContainer extends Container
             'security.firewall' => 'getSecurity_FirewallService',
             'security.firewall.map.context.main' => 'getSecurity_Firewall_Map_Context_MainService',
             'security.rememberme.response_listener' => 'getSecurity_Rememberme_ResponseListenerService',
+            'security.role_hierarchy' => 'getSecurity_RoleHierarchyService',
             'security.secure_random' => 'getSecurity_SecureRandomService',
             'security.validator.user_password' => 'getSecurity_Validator_UserPasswordService',
             'service_container' => 'getServiceContainerService',
@@ -468,16 +472,42 @@ class AppTestDebugProjectContainer extends Container
     }
 
     /**
-     * Gets the 'projecta_acl.classmanager' service.
+     * Gets the 'projecta_acl.ace.classmanager' service.
      *
      * This service is shared.
      * This method always returns the same instance of the service.
      *
-     * @return ProjectA\Bundle\AclBundle\Security\Acl\Manager\ClassManager A ProjectA\Bundle\AclBundle\Security\Acl\Manager\ClassManager instance.
+     * @return ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ClassAceManager A ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ClassAceManager instance.
      */
-    protected function getProjectaAcl_ClassmanagerService()
+    protected function getProjectaAcl_Ace_ClassmanagerService()
     {
-        return $this->services['projecta_acl.classmanager'] = new \ProjectA\Bundle\AclBundle\Security\Acl\Manager\ClassManager($this->get('security.acl.provider'), $this->get('security.context'), $this->get('security.acl.object_identity_retrieval_strategy'), 'all');
+        return $this->services['projecta_acl.ace.classmanager'] = new \ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ClassAceManager($this->get('security.acl.provider'), $this->get('security.context'), $this->get('security.acl.object_identity_retrieval_strategy'), 'all');
+    }
+
+    /**
+     * Gets the 'projecta_acl.ace.objectmanager' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager A ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager instance.
+     */
+    protected function getProjectaAcl_Ace_ObjectmanagerService()
+    {
+        return $this->services['projecta_acl.ace.objectmanager'] = new \ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager($this->get('security.acl.provider'), $this->get('security.context'), $this->get('security.acl.object_identity_retrieval_strategy'), 'all');
+    }
+
+    /**
+     * Gets the 'projecta_acl.acl.collection_cache' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Symfony\Component\Security\Acl\Domain\AclCollectionCache A Symfony\Component\Security\Acl\Domain\AclCollectionCache instance.
+     */
+    protected function getProjectaAcl_Acl_CollectionCacheService()
+    {
+        return $this->services['projecta_acl.acl.collection_cache'] = new \Symfony\Component\Security\Acl\Domain\AclCollectionCache($this->get('security.acl.provider'), $this->get('security.acl.object_identity_retrieval_strategy'), $this->get('security.acl.security_identity_retrieval_strategy'));
     }
 
     /**
@@ -494,16 +524,16 @@ class AppTestDebugProjectContainer extends Container
     }
 
     /**
-     * Gets the 'projecta_acl.objectmanager' service.
+     * Gets the 'projecta_acl.manager' service.
      *
      * This service is shared.
      * This method always returns the same instance of the service.
      *
-     * @return ProjectA\Bundle\AclBundle\Security\Acl\Manager\ObjectManager A ProjectA\Bundle\AclBundle\Security\Acl\Manager\ObjectManager instance.
+     * @return ProjectA\Bundle\AclBundle\Security\Acl\Manager\AclManager A ProjectA\Bundle\AclBundle\Security\Acl\Manager\AclManager instance.
      */
-    protected function getProjectaAcl_ObjectmanagerService()
+    protected function getProjectaAcl_ManagerService()
     {
-        return $this->services['projecta_acl.objectmanager'] = new \ProjectA\Bundle\AclBundle\Security\Acl\Manager\ObjectManager($this->get('security.acl.provider'), $this->get('security.context'), $this->get('security.acl.object_identity_retrieval_strategy'), 'all');
+        return $this->services['projecta_acl.manager'] = new \ProjectA\Bundle\AclBundle\Security\Acl\Manager\AclManager($this->get('security.context'), $this->get('projecta_acl.ace.classmanager'), $this->get('projecta_acl.ace.objectmanager'));
     }
 
     /**
@@ -702,7 +732,7 @@ class AppTestDebugProjectContainer extends Container
 
         $c = new \Symfony\Component\Security\Http\AccessMap();
 
-        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($c, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), NULL), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($a, array(0 => new \Symfony\Component\Security\Core\User\InMemoryUserProvider()), 'main', NULL, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE)), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($a, '52ac9a9593fcf', NULL), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($a, $this->get('security.access.decision_manager'), $c, $this->get('security.authentication.manager'))), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($a, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($b, $b), 'main', NULL, NULL, NULL, NULL));
+        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($c, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), NULL), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($a, array(0 => new \Symfony\Component\Security\Core\User\InMemoryUserProvider()), 'main', NULL, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE)), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($a, '52ad9c618bf37', NULL), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($a, $this->get('security.access.decision_manager'), $c, $this->get('security.authentication.manager'))), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($a, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($b, $b), 'main', NULL, NULL, NULL, NULL));
     }
 
     /**
@@ -1583,11 +1613,10 @@ class AppTestDebugProjectContainer extends Container
      */
     protected function getSecurity_Access_DecisionManagerService()
     {
-        $a = $this->get('security.authentication.trust_resolver');
+        $a = $this->get('security.role_hierarchy');
+        $b = $this->get('security.authentication.trust_resolver');
 
-        $b = new \Symfony\Component\Security\Core\Role\RoleHierarchy(array());
-
-        return $this->services['security.access.decision_manager'] = new \Symfony\Component\Security\Core\Authorization\AccessDecisionManager(array(0 => new \Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter($b), 1 => new \Symfony\Component\Security\Core\Authorization\Voter\ExpressionVoter(new \Symfony\Component\Security\Core\Authorization\ExpressionLanguage(), $a, $b), 2 => new \Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter($a), 3 => new \Symfony\Component\Security\Acl\Voter\AclVoter($this->get('security.acl.provider'), $this->get('security.acl.object_identity_retrieval_strategy'), new \Symfony\Component\Security\Acl\Domain\SecurityIdentityRetrievalStrategy($b, $a), new \Symfony\Component\Security\Acl\Permission\BasicPermissionMap(), NULL, true)), 'affirmative', false, true);
+        return $this->services['security.access.decision_manager'] = new \Symfony\Component\Security\Core\Authorization\AccessDecisionManager(array(0 => new \Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter($a), 1 => new \Symfony\Component\Security\Core\Authorization\Voter\ExpressionVoter(new \Symfony\Component\Security\Core\Authorization\ExpressionLanguage(), $b, $a), 2 => new \Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter($b), 3 => new \Symfony\Component\Security\Acl\Voter\AclVoter($this->get('security.acl.provider'), $this->get('security.acl.object_identity_retrieval_strategy'), $this->get('security.acl.security_identity_retrieval_strategy'), new \Symfony\Component\Security\Acl\Permission\BasicPermissionMap(), NULL, true)), 'affirmative', false, true);
     }
 
     /**
@@ -1608,6 +1637,23 @@ class AppTestDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'security.acl.security_identity_retrieval_strategy' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * This service is private.
+     * If you want to be able to request this service from the container directly,
+     * make it public, otherwise you might end up with broken code.
+     *
+     * @return Symfony\Component\Security\Acl\Domain\SecurityIdentityRetrievalStrategy A Symfony\Component\Security\Acl\Domain\SecurityIdentityRetrievalStrategy instance.
+     */
+    protected function getSecurity_Acl_SecurityIdentityRetrievalStrategyService()
+    {
+        return $this->services['security.acl.security_identity_retrieval_strategy'] = new \Symfony\Component\Security\Acl\Domain\SecurityIdentityRetrievalStrategy($this->get('security.role_hierarchy'), $this->get('security.authentication.trust_resolver'));
+    }
+
+    /**
      * Gets the 'security.authentication.manager' service.
      *
      * This service is shared.
@@ -1621,7 +1667,7 @@ class AppTestDebugProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('52ac9a9593fcf')), true);
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('52ad9c618bf37')), true);
 
         $instance->setEventDispatcher($this->get('debug.event_dispatcher'));
 
@@ -1643,6 +1689,23 @@ class AppTestDebugProjectContainer extends Container
     protected function getSecurity_Authentication_TrustResolverService()
     {
         return $this->services['security.authentication.trust_resolver'] = new \Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver('Symfony\\Component\\Security\\Core\\Authentication\\Token\\AnonymousToken', 'Symfony\\Component\\Security\\Core\\Authentication\\Token\\RememberMeToken');
+    }
+
+    /**
+     * Gets the 'security.role_hierarchy' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * This service is private.
+     * If you want to be able to request this service from the container directly,
+     * make it public, otherwise you might end up with broken code.
+     *
+     * @return Symfony\Component\Security\Core\Role\RoleHierarchy A Symfony\Component\Security\Core\Role\RoleHierarchy instance.
+     */
+    protected function getSecurity_RoleHierarchyService()
+    {
+        return $this->services['security.role_hierarchy'] = new \Symfony\Component\Security\Core\Role\RoleHierarchy(array());
     }
 
     /**
@@ -2007,8 +2070,9 @@ class AppTestDebugProjectContainer extends Container
                 'default' => 'doctrine.dbal.default_connection',
             ),
             'doctrine.default_connection' => 'default',
-            'projecta_acl.manager.class.class' => 'ProjectA\\Bundle\\AclBundle\\Security\\Acl\\Manager\\ClassManager',
-            'projecta_acl.manager.object.class' => 'ProjectA\\Bundle\\AclBundle\\Security\\Acl\\Manager\\ObjectManager',
+            'projecta_acl.manager.class' => 'ProjectA\\Bundle\\AclBundle\\Security\\Acl\\Manager\\AclManager',
+            'projecta_acl.ace.classmanager.class' => 'ProjectA\\Bundle\\AclBundle\\Security\\Acl\\Manager\\AceManager\\ClassAceManager',
+            'projecta_acl.ace.objectmanager.class' => 'ProjectA\\Bundle\\AclBundle\\Security\\Acl\\Manager\\AceManager\\ObjectAceManager',
             'projecta_acl.remove_orphans' => true,
             'projecta_acl.default_strategy' => 'all',
             'console.command.ids' => array(

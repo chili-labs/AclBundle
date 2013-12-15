@@ -5,19 +5,26 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="projecta_acl.manager.class.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\ClassManager</parameter>
-        <parameter key="projecta_acl.manager.object.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\ObjectManager</parameter>
+        <parameter key="projecta_acl.manager.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\AclManager</parameter>
+        <parameter key="projecta_acl.ace.classmanager.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ClassAceManager</parameter>
+        <parameter key="projecta_acl.ace.objectmanager.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager</parameter>
     </parameters>
 
     <services>
-        <service id="projecta_acl.classmanager" class="%projecta_acl.manager.class.class%">
+        <service id="projecta_acl.manager" class="%projecta_acl.manager.class%">
+            <argument type="service" id="security.context" />
+            <argument type="service" id="projecta_acl.ace.classmanager" />
+            <argument type="service" id="projecta_acl.ace.objectmanager" />
+        </service>
+
+        <service id="projecta_acl.ace.classmanager" class="%projecta_acl.ace.classmanager.class%">
             <argument type="service" id="security.acl.provider" />
             <argument type="service" id="security.context" />
             <argument type="service" id="security.acl.object_identity_retrieval_strategy" />
             <argument>%projecta_acl.default_strategy%</argument>
         </service>
 
-        <service id="projecta_acl.objectmanager" class="%projecta_acl.manager.object.class%">
+        <service id="projecta_acl.ace.objectmanager" class="%projecta_acl.ace.objectmanager.class%">
             <argument type="service" id="security.acl.provider" />
             <argument type="service" id="security.context" />
             <argument type="service" id="security.acl.object_identity_retrieval_strategy" />
@@ -25,10 +32,10 @@
         </service>
 
         <!-- caching -->
-        <!--<service id="security.acl.collection_cache" class="%security.acl.collection_cache.class%">-->
-            <!--<argument type="service" id="security.acl.provider" />-->
-            <!--<argument type="service" id="security.acl.object_identity_retrieval_strategy" />-->
-            <!--<argument type="service" id="security.acl.security_identity_retrieval_strategy" />-->
-        <!--</service>-->
+        <service id="projecta_acl.acl.collection_cache" class="%security.acl.collection_cache.class%">
+            <argument type="service" id="security.acl.provider" />
+            <argument type="service" id="security.acl.object_identity_retrieval_strategy" />
+            <argument type="service" id="security.acl.security_identity_retrieval_strategy" />
+        </service>
     </services>
 </container>

@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager;
+namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager;
 
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
@@ -30,7 +30,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @author Daniel Tschinder <daniel.tschinder@project-a.com>
  */
-abstract class AbstractManager implements ManagerInterface
+abstract class AbstractAceManager implements AceManagerInterface
 {
     /**
      * @var MutableAclProviderInterface
@@ -58,8 +58,12 @@ abstract class AbstractManager implements ManagerInterface
      * @param ObjectIdentityRetrievalStrategyInterface $objectIdentityStrategy
      * @param string $defaultStrategy
      */
-    public function __construct(MutableAclProviderInterface $provider, SecurityContextInterface $context, ObjectIdentityRetrievalStrategyInterface $objectIdentityStrategy, $defaultStrategy)
-    {
+    public function __construct(
+        MutableAclProviderInterface $provider,
+        SecurityContextInterface $context,
+        ObjectIdentityRetrievalStrategyInterface $objectIdentityStrategy,
+        $defaultStrategy
+    ) {
         $this->provider = $provider;
         $this->context = $context;
         $this->objectIdentityStrategy = $objectIdentityStrategy;
@@ -191,6 +195,7 @@ abstract class AbstractManager implements ManagerInterface
      * @param string $field
      */
     abstract protected function deleteAce(MutableAclInterface $acl, $index, $field = null);
+
 
     /**
      * @param object $object

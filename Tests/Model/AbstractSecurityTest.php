@@ -1,9 +1,20 @@
 <?php
 
+/*
+ * This file is part of the ProjectA AclBundle.
+ *
+ * (c) 1up GmbH
+ * (c) Project A Ventures GmbH & Co. KG
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace ProjectA\Bundle\AclBundle\Tests\Model;
 
-use ProjectA\Bundle\AclBundle\Security\Acl\Manager\ClassManager;
-use ProjectA\Bundle\AclBundle\Security\Acl\Manager\ObjectManager;
+use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ClassAceManager;
+use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager;
+use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AclManager;
 use Symfony\Component\Security\Acl\Dbal\Schema;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -15,14 +26,19 @@ abstract class AbstractSecurityTest extends WebTestCase
     protected $container;
 
     /**
-     * @var ObjectManager
+     * @var ObjectAceManager
      */
     protected $objectmanager;
 
     /**
-     * @var ClassManager
+     * @var ClassAceManager
      */
     protected $classmanager;
+
+    /**
+     * @var AclManager
+     */
+    protected $manager;
 
     protected $object1;
     protected $object2;
@@ -57,8 +73,9 @@ abstract class AbstractSecurityTest extends WebTestCase
             $this->connection->exec($sql);
         }
 
-        $this->objectmanager = $this->container->get('projecta_acl.objectmanager');
-        $this->classmanager = $this->container->get('projecta_acl.classmanager');
+        $this->objectmanager = $this->container->get('projecta_acl.ace.objectmanager');
+        $this->classmanager = $this->container->get('projecta_acl.ace.classmanager');
+        $this->manager = $this->container->get('projecta_acl.manager');
 
         $this->object1 = new SomeObject(1);
         $this->object2 = new SomeObject(2);

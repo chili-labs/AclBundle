@@ -262,8 +262,9 @@
       <parameter key="default">doctrine.dbal.default_connection</parameter>
     </parameter>
     <parameter key="doctrine.default_connection">default</parameter>
-    <parameter key="projecta_acl.manager.class.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\ClassManager</parameter>
-    <parameter key="projecta_acl.manager.object.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\ObjectManager</parameter>
+    <parameter key="projecta_acl.manager.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\AclManager</parameter>
+    <parameter key="projecta_acl.ace.classmanager.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ClassAceManager</parameter>
+    <parameter key="projecta_acl.ace.objectmanager.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager</parameter>
     <parameter key="projecta_acl.remove_orphans">true</parameter>
     <parameter key="projecta_acl.default_strategy">all</parameter>
     <parameter key="console.command.ids" type="collection"/>
@@ -1006,7 +1007,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>52ac9a9593fcf</argument>
+            <argument>52ad9c618bf37</argument>
           </service>
         </argument>
       </argument>
@@ -1024,11 +1025,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter" public="false">
             <tag name="security.voter" priority="245"/>
-            <argument type="service">
-              <service class="Symfony\Component\Security\Core\Role\RoleHierarchy" public="false">
-                <argument type="collection"/>
-              </service>
-            </argument>
+            <argument type="service" id="security.role_hierarchy"/>
           </service>
         </argument>
         <argument type="service">
@@ -1038,11 +1035,7 @@
               <service class="Symfony\Component\Security\Core\Authorization\ExpressionLanguage" public="false"/>
             </argument>
             <argument type="service" id="security.authentication.trust_resolver"/>
-            <argument type="service">
-              <service class="Symfony\Component\Security\Core\Role\RoleHierarchy" public="false">
-                <argument type="collection"/>
-              </service>
-            </argument>
+            <argument type="service" id="security.role_hierarchy" on-invalid="null"/>
           </service>
         </argument>
         <argument type="service">
@@ -1057,16 +1050,7 @@
             <tag name="security.voter" priority="255"/>
             <argument type="service" id="security.acl.provider"/>
             <argument type="service" id="security.acl.object_identity_retrieval_strategy"/>
-            <argument type="service">
-              <service class="Symfony\Component\Security\Acl\Domain\SecurityIdentityRetrievalStrategy" public="false">
-                <argument type="service">
-                  <service class="Symfony\Component\Security\Core\Role\RoleHierarchy" public="false">
-                    <argument type="collection"/>
-                  </service>
-                </argument>
-                <argument type="service" id="security.authentication.trust_resolver"/>
-              </service>
-            </argument>
+            <argument type="service" id="security.acl.security_identity_retrieval_strategy"/>
             <argument type="service">
               <service class="Symfony\Component\Security\Acl\Permission\BasicPermissionMap" public="false"/>
             </argument>
@@ -1078,6 +1062,9 @@
       <argument>affirmative</argument>
       <argument>false</argument>
       <argument>true</argument>
+    </service>
+    <service id="security.role_hierarchy" class="Symfony\Component\Security\Core\Role\RoleHierarchy" public="false">
+      <argument type="collection"/>
     </service>
     <service id="security.firewall" class="Symfony\Component\Security\Http\Firewall">
       <tag name="kernel.event_subscriber"/>
@@ -1145,7 +1132,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>52ac9a9593fcf</argument>
+            <argument>52ad9c618bf37</argument>
             <argument>null</argument>
           </service>
         </argument>
@@ -1180,6 +1167,10 @@
       </argument>
     </service>
     <service id="security.acl.object_identity_retrieval_strategy" class="Symfony\Component\Security\Acl\Domain\ObjectIdentityRetrievalStrategy" public="false"/>
+    <service id="security.acl.security_identity_retrieval_strategy" class="Symfony\Component\Security\Acl\Domain\SecurityIdentityRetrievalStrategy" public="false">
+      <argument type="service" id="security.role_hierarchy"/>
+      <argument type="service" id="security.authentication.trust_resolver"/>
+    </service>
     <service id="security.acl.dbal.schema" class="Symfony\Component\Security\Acl\Dbal\Schema">
       <argument type="collection">
         <argument key="class_table_name">acl_classes</argument>
@@ -1256,17 +1247,27 @@
       </argument>
       <argument type="collection"/>
     </service>
-    <service id="projecta_acl.classmanager" class="ProjectA\Bundle\AclBundle\Security\Acl\Manager\ClassManager">
+    <service id="projecta_acl.manager" class="ProjectA\Bundle\AclBundle\Security\Acl\Manager\AclManager">
+      <argument type="service" id="security.context"/>
+      <argument type="service" id="projecta_acl.ace.classmanager"/>
+      <argument type="service" id="projecta_acl.ace.objectmanager"/>
+    </service>
+    <service id="projecta_acl.ace.classmanager" class="ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ClassAceManager">
       <argument type="service" id="security.acl.provider"/>
       <argument type="service" id="security.context"/>
       <argument type="service" id="security.acl.object_identity_retrieval_strategy"/>
       <argument>all</argument>
     </service>
-    <service id="projecta_acl.objectmanager" class="ProjectA\Bundle\AclBundle\Security\Acl\Manager\ObjectManager">
+    <service id="projecta_acl.ace.objectmanager" class="ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager">
       <argument type="service" id="security.acl.provider"/>
       <argument type="service" id="security.context"/>
       <argument type="service" id="security.acl.object_identity_retrieval_strategy"/>
       <argument>all</argument>
+    </service>
+    <service id="projecta_acl.acl.collection_cache" class="Symfony\Component\Security\Acl\Domain\AclCollectionCache">
+      <argument type="service" id="security.acl.provider"/>
+      <argument type="service" id="security.acl.object_identity_retrieval_strategy"/>
+      <argument type="service" id="security.acl.security_identity_retrieval_strategy"/>
     </service>
     <service id="projecta_acl.doctrine_subscriber" class="ProjectA\Bundle\AclBundle\EventListener\DoctrineSubscriber">
       <tag name="doctrine.event_subscriber"/>

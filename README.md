@@ -1,5 +1,5 @@
 # ProjectA AclBundle
-###### Bundle for Symfony2 providing easy access to the complexe ACL subsystem
+###### Bundle for Symfony2 providing easy access to the complex ACL subsystem
 
 [![Latest Stable Version](https://poser.pugx.org/project-a/AclBundle/v/stable.png)](https://packagist.org/packages/project-a/AclBundle) [![Latest Unstable Version](https://poser.pugx.org/project-a/AclBundle/v/unstable.png)](https://packagist.org/packages/project-a/AclBundle) [![Total Downloads](https://poser.pugx.org/project-a/AclBundle/downloads.png)](https://packagist.org/packages/project-a/AclBundle) [![Build Status](https://secure.travis-ci.org/project-a/AclBundle.png?branch=master)](http://travis-ci.org/project-a/AclBundle) [![Coverage Status](https://coveralls.io/repos/project-a/AclBundle/badge.png?branch=master)](https://coveralls.io/r/project-a/AclBundle?branch=master)
 

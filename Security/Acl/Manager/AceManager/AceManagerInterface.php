@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager;
+namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @author Daniel Tschinder <daniel.tschinder@project-a.com>
  */
-interface ManagerInterface
+interface AceManagerInterface
 {
     /**
      * Grant a permission for an object
@@ -72,7 +72,7 @@ interface ManagerInterface
     /**
      * Delete the complete acl for an object
      *
-     * All AccessControlEntries and ObjectIdentities for an object
+     * All AccessControlEntries and the ObjectIdentity for an object
      * are deleted from storage
      *
      * @param object $object

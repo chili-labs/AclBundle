@@ -36,7 +36,7 @@ class DoctrineSubscriber implements EventSubscriber
      */
     public function preRemove(LifecycleEventArgs $args)
     {
-        $manager = $this->container->get('projecta_acl.objectmanager');
+        $manager = $this->container->get('projecta_acl.ace.objectmanager');
         $remove = $this->container->getParameter('projecta_acl.remove_orphans');
 
         if ($remove) {
