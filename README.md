@@ -19,7 +19,7 @@ run the `php composer.phar install` command to install it:
         }
     }
 
-Alternatively, you can download the [`silexrouting.zip`][1] file and extract it.
+Alternatively, you can download the [`acl-bundle.zip`][1] file and extract it.
 
 ## Usage
 
@@ -29,7 +29,7 @@ WIP
 
 To run the test suite, you need [composer](http://getcomposer.org).
 
-    $ php composer.phar install --dev
+    $ php composer.phar install
     $ vendor/bin/phpunit
 
 ## License
