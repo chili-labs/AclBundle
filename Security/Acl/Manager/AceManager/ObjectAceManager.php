@@ -53,9 +53,9 @@ class ObjectAceManager extends AbstractAceManager
     protected function updateAce(MutableAclInterface $acl, $index, $mask, $field = null, $strategy = null)
     {
         if ($field) {
-            $acl->updateObjectAce($index, $mask, $strategy);
-        } else {
             $acl->updateObjectFieldAce($index, $field, $mask, $strategy);
+        } else {
+            $acl->updateObjectAce($index, $mask, $strategy);
         }
     }
 
@@ -65,9 +65,9 @@ class ObjectAceManager extends AbstractAceManager
     protected function deleteAce(MutableAclInterface $acl, $index, $field = null)
     {
         if ($field) {
-            $acl->deleteObjectAce($index);
-        } else {
             $acl->deleteObjectFieldAce($index, $field);
+        } else {
+            $acl->deleteObjectAce($index);
         }
     }
 }

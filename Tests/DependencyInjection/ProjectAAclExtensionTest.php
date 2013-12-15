@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Oneup\AclBundle\Tests\DependencyInjection;
+namespace ProjectA\Bundle\AclBundle\Tests\DependencyInjection;
 
 use ProjectA\Bundle\AclBundle\Tests\Model\AbstractSecurityTest;
 

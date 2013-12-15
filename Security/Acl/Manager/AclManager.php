@@ -73,7 +73,7 @@ class AclManager
      *
      * @return bool
      */
-    public function isGranted($attributes, $object, $field = null)
+    public function isGranted($attributes, $object = null, $field = null)
     {
         if ($field) {
             $object = new FieldVote($object, $field);

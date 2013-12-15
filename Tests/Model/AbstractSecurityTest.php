@@ -12,6 +12,7 @@
 
 namespace ProjectA\Bundle\AclBundle\Tests\Model;
 
+use Doctrine\DBAL\Connection;
 use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ClassAceManager;
 use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager;
 use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AclManager;
@@ -50,7 +51,15 @@ abstract class AbstractSecurityTest extends WebTestCase
      */
     protected $token;
 
+    /**
+     * @var Connection
+     */
     protected $connection;
+
+    /**
+     * @var SomeObject
+     */
+    protected $object;
 
     protected function setUp()
     {
@@ -76,14 +85,21 @@ abstract class AbstractSecurityTest extends WebTestCase
             $this->connection->exec($sql);
         }
 
-        $this->objectmanager = $this->container->get('projecta_acl.ace.objectmanager');
-        $this->classmanager = $this->container->get('projecta_acl.ace.classmanager');
         $this->manager = $this->container->get('projecta_acl.manager');
+        $this->objectmanager = $this->manager->manageObjectAces();
+        $this->classmanager = $this->manager->manageClassAces();
+
+        $this->object = new SomeObject(1);
     }
 
+    /**
+     * @param array $roles
+     *
+     * @return UsernamePasswordToken
+     */
     protected function createToken(array $roles = array())
     {
-        $roles += array('ROLE_USER');
+        $roles[] = 'ROLE_USER';
 
         return new UsernamePasswordToken(uniqid(), null, 'main', $roles);
     }

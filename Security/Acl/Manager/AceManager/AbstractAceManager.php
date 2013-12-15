@@ -99,7 +99,7 @@ abstract class AbstractAceManager implements AceManagerInterface
         $sid = $this->createSecurityIdentity($identity);
 
         $acl = $this->findAcl($object);
-        $aces = $this->getAces($acl, !empty($field));
+        $aces = $this->getAces($acl, $field);
 
         /* @var EntryInterface $ace */
         foreach ($aces as $index => $ace) {
@@ -122,6 +122,7 @@ abstract class AbstractAceManager implements AceManagerInterface
 
         $sid = $this->createSecurityIdentity($identity);
         $aces = $this->getAces($acl, $field);
+        $aces = array_reverse($aces, true);
 
         /* @var EntryInterface $ace */
         foreach ($aces as $index => $ace) {
@@ -143,6 +144,7 @@ abstract class AbstractAceManager implements AceManagerInterface
         }
 
         $aces = $this->getAces($acl, $field);
+        $aces = array_reverse($aces, true);
 
         /* @var EntryInterface $ace */
         foreach (array_keys($aces) as $index) {

@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ProjectA\AclBundle\Tests\EventListener;
+namespace ProjectA\Bundle\AclBundle\Tests\EventListener;
 
 use ProjectA\Bundle\AclBundle\Tests\Model\AbstractSecurityTest;
 use ProjectA\Bundle\AclBundle\Tests\Model\SomeObject;

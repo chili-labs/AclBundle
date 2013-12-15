@@ -21,7 +21,6 @@
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.0",
-        "doctrine/mongodb-odm": "@dev",
         "doctrine/orm": "~2.2",
         "phpunit/phpunit": "~3.7",
         "satooshi/php-coveralls": "*",
@@ -31,8 +30,8 @@
         "symfony/security-bundle": "~2.3"
     },
     "suggest": {
-        "doctrine/orm": "Allows you to remove Acl entries automatically.",
-        "doctrine/mongodb-odm": "Allows you to remove Acl entries automatically."
+        "doctrine/orm": "Allows you to remove Acl entries automatically. (When using ORM for Acl)",
+        "doctrine/mongodb-odm": "Allows you to remove Acl entries automatically. (When using MongoDB for Acl)"
     },
     "autoload": {
         "psr-0": { "ProjectA\\Bundle\\AclBundle": "" }
