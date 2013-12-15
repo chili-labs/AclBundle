@@ -96,9 +96,11 @@ abstract class AbstractAceManager implements AceManagerInterface
      */
     public function revoke($object, $mask, $identity, $field = null)
     {
-        $sid = $this->createSecurityIdentity($identity);
+        if (null === ($acl = $this->findAcl($object))) {
+            return;
+        }
 
-        $acl = $this->findAcl($object);
+        $sid = $this->createSecurityIdentity($identity);
         $aces = $this->getAces($acl, $field);
 
         /* @var EntryInterface $ace */
@@ -241,16 +243,14 @@ abstract class AbstractAceManager implements AceManagerInterface
     protected function createSecurityIdentity($identity)
     {
         if ($identity instanceof UserInterface) {
-            $securityIdentity = UserSecurityIdentity::fromAccount($identity);
+            return UserSecurityIdentity::fromAccount($identity);
         } elseif ($identity instanceof TokenInterface) {
-            $securityIdentity = UserSecurityIdentity::fromToken($identity);
+            return UserSecurityIdentity::fromToken($identity);
         } elseif ($identity instanceof RoleInterface || is_string($identity)) {
-            $securityIdentity = new RoleSecurityIdentity($identity);
-        } else {
-            throw new \InvalidArgumentException('Could not create a valid SecurityIdentity with the provided identity information');
+            return new RoleSecurityIdentity($identity);
         }
 
-        return $securityIdentity;
+        throw new \InvalidArgumentException('Could not create a valid SecurityIdentity with the provided identity information');
     }
 
     /**
