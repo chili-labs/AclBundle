@@ -15,7 +15,6 @@ namespace Oneup\AclBundle\Tests\DependencyInjection;
 use ProjectA\Bundle\AclBundle\Tests\Model\AbstractSecurityTest;
 
 class ProjectAAclExtensionTest extends AbstractSecurityTest
-
 {
     public function testIfTestSuiteLoads()
     {
@@ -34,5 +33,18 @@ class ProjectAAclExtensionTest extends AbstractSecurityTest
             'all' == $this->container->getParameter('projecta_acl.default_strategy') ||
             'equal' == $this->container->getParameter('projecta_acl.default_strategy')
         );
+    }
+
+    public function testIfContainerExists()
+    {
+        $this->assertNotNull($this->client);
+        $this->assertNotNull($this->container);
+    }
+
+    public function testIfSecurityContextLoads()
+    {
+        $aclProvider = $this->container->get('security.context');
+        $this->assertTrue($aclProvider->isGranted('ROLE_USER'));
+        $this->assertFalse($aclProvider->isGranted('ROLE_ADMIN'));
     }
 }

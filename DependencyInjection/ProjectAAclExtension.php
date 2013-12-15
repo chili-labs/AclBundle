@@ -3,6 +3,8 @@
 namespace ProjectA\Bundle\AclBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -30,5 +32,13 @@ class ProjectAAclExtension extends Extension
 
         $container->setParameter('projecta_acl.remove_orphans', $config['remove_orphans']);
         $container->setParameter('projecta_acl.default_strategy', $strategy);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAlias()
+    {
+        return 'projecta_acl';
     }
 }

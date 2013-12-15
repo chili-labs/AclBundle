@@ -11,8 +11,15 @@
 
 namespace ProjectA\Bundle\AclBundle;
 
+use ProjectA\Bundle\AclBundle\DependencyInjection\ProjectAAclExtension;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ProjectAAclBundle extends Bundle
 {
+    public function getContainerExtension()
+    {
+        return new ProjectAAclExtension();
+    }
 }

@@ -27,3 +27,5 @@ doctrine:
             default:
                 driver: pdo_sqlite
                 memory: true
+projecta_acl:
+    remove_orphans: true
