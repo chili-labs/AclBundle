@@ -15,8 +15,6 @@ namespace ProjectA\Bundle\AclBundle\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
-use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
 /**
  * EventSubscriber for doctrine that removes acl entries on
