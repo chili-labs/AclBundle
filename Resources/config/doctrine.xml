@@ -6,7 +6,8 @@
 
     <services>
         <service id="projecta_acl.doctrine_subscriber" class="ProjectA\Bundle\AclBundle\EventListener\DoctrineSubscriber">
-            <argument type="service" id="service_container" />
+            <argument type="service" id="projecta_acl.ace.objectmanager" />
+            <argument>%projecta_acl.remove_orphans%</argument>
             <tag name="doctrine.event_subscriber" />
             <tag name="doctrine_mongodb.odm.event_subscriber" />
         </service>
