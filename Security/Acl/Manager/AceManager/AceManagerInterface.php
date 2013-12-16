@@ -28,6 +28,8 @@ interface AceManagerInterface
      * @param string|TokenInterface|RoleInterface|UserInterface $identity
      * @param string                                            $field
      * @param string                                            $strategy
+     *
+     * @return self
      */
     public function grant($object, $mask, $identity, $field = null, $strategy = null);
 
@@ -39,6 +41,8 @@ interface AceManagerInterface
      * @param string|TokenInterface|RoleInterface|UserInterface $identity
      * @param string                                            $field
      * @param string                                            $strategy
+     *
+     * @return self
      */
     public function overwrite($object, $mask, $identity, $field = null, $strategy = null);
 
@@ -49,6 +53,8 @@ interface AceManagerInterface
      * @param int                                               $mask
      * @param string|TokenInterface|RoleInterface|UserInterface $identity
      * @param string                                            $field
+     *
+     * @return self
      */
     public function revoke($object, $mask, $identity, $field = null);
 
@@ -58,6 +64,8 @@ interface AceManagerInterface
      * @param object                                            $object
      * @param string|TokenInterface|RoleInterface|UserInterface $identity
      * @param string                                            $field
+     *
+     * @return self
      */
     public function revokeAllForIdentity($object, $identity, $field = null);
 
@@ -66,6 +74,8 @@ interface AceManagerInterface
      *
      * @param object $object
      * @param string $field
+     *
+     * @return self
      */
     public function revokeAll($object, $field = null);
 
@@ -76,6 +86,8 @@ interface AceManagerInterface
      * are deleted from storage
      *
      * @param object $object
+     *
+     * @return self
      */
     public function deleteAcl($object);
 }

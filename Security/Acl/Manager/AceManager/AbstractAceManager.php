@@ -80,6 +80,8 @@ abstract class AbstractAceManager implements AceManagerInterface
 
         $this->insertAce($acl, $sid, $mask, $field, 0, true, $strategy ?: $this->defaultStrategy);
         $this->provider->updateAcl($acl);
+
+        return $this;
     }
 
     /**
@@ -89,6 +91,8 @@ abstract class AbstractAceManager implements AceManagerInterface
     {
         $this->revokeAllForIdentity($object, $identity, $field);
         $this->grant($object, $mask, $identity, $field, $strategy);
+
+        return $this;
     }
 
     /**
@@ -97,7 +101,7 @@ abstract class AbstractAceManager implements AceManagerInterface
     public function revoke($object, $mask, $identity, $field = null)
     {
         if (null === ($acl = $this->findAcl($object))) {
-            return;
+            return $this;
         }
 
         $sid = $this->createSecurityIdentity($identity);
@@ -109,8 +113,9 @@ abstract class AbstractAceManager implements AceManagerInterface
                 $this->updateAce($acl, $index, $ace->getMask() & ~$mask, $field);
             }
         }
-
         $this->provider->updateAcl($acl);
+
+        return $this;
     }
 
     /**
@@ -119,7 +124,7 @@ abstract class AbstractAceManager implements AceManagerInterface
     public function revokeAllForIdentity($object, $identity, $field = null)
     {
         if (null === ($acl = $this->findAcl($object))) {
-            return;
+            return $this;
         }
 
         $sid = $this->createSecurityIdentity($identity);
@@ -132,8 +137,9 @@ abstract class AbstractAceManager implements AceManagerInterface
                 $this->deleteAce($acl, $index, $field);
             }
         }
-
         $this->provider->updateAcl($acl);
+
+        return $this;
     }
 
     /**
@@ -142,7 +148,7 @@ abstract class AbstractAceManager implements AceManagerInterface
     public function revokeAll($object, $field = null)
     {
         if (null === ($acl = $this->findAcl($object))) {
-            return;
+            return $this;
         }
 
         $aces = $this->getAces($acl, $field);
@@ -152,8 +158,9 @@ abstract class AbstractAceManager implements AceManagerInterface
         foreach (array_keys($aces) as $index) {
             $this->deleteAce($acl, $index, $field);
         }
-
         $this->provider->updateAcl($acl);
+
+        return $this;
     }
 
     /**
@@ -163,6 +170,8 @@ abstract class AbstractAceManager implements AceManagerInterface
     {
         $oid = $this->createObjectIdentity($object);
         $this->provider->deleteAcl($oid);
+
+        return $this;
     }
 
     /**
