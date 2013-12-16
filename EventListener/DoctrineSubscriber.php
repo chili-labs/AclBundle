@@ -14,7 +14,9 @@ namespace ProjectA\Bundle\AclBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager;
+use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
+use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 
 /**
  * EventSubscriber for doctrine that removes acl entries on
@@ -26,25 +28,18 @@ use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager;
  *
  * @author Daniel Tschinder <daniel.tschinder@project-a.com>
  */
-class DoctrineSubscriber implements EventSubscriber
+class DoctrineSubscriber extends ContainerAware implements EventSubscriber
 {
-    /**
-     * @var ObjectAceManager
-     */
-    private $objectManager;
-
     /**
      * @var bool
      */
     private $isActive;
 
     /**
-     * @param ObjectAceManager $objectManager
-     * @param bool             $isActive
+     * @param bool $isActive
      */
-    public function __construct(ObjectAceManager $objectManager, $isActive)
+    public function __construct($isActive)
     {
-        $this->objectManager = $objectManager;
         $this->isActive = $isActive;
     }
 
@@ -54,7 +49,7 @@ class DoctrineSubscriber implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         if ($this->isActive) {
-            $this->objectManager->deleteAcl($args->getObject());
+            $this->container->get('projecta_acl.ace.objectmanager')->deleteAcl($args->getObject());
         }
     }
 
