@@ -20,7 +20,6 @@ use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Security\Acl\Dbal\Schema;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 abstract class AbstractSecurityTest extends WebTestCase
 {

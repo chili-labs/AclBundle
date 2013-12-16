@@ -23,41 +23,41 @@ interface AceManagerInterface
     /**
      * Grant a permission for an object
      *
-     * @param object $object
-     * @param int $mask
+     * @param object                                            $object
+     * @param int                                               $mask
      * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string $field
-     * @param string $strategy
+     * @param string                                            $field
+     * @param string                                            $strategy
      */
     public function grant($object, $mask, $identity, $field = null, $strategy = null);
 
     /**
      * Revoke all permissions and grant the supplied one only
      *
-     * @param object $object
-     * @param int $mask
+     * @param object                                            $object
+     * @param int                                               $mask
      * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string $field
-     * @param string $strategy
+     * @param string                                            $field
+     * @param string                                            $strategy
      */
     public function overwrite($object, $mask, $identity, $field = null, $strategy = null);
 
     /**
      * Revoke a permission for an object
      *
-     * @param object $object
-     * @param int $mask
+     * @param object                                            $object
+     * @param int                                               $mask
      * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string $field
+     * @param string                                            $field
      */
     public function revoke($object, $mask, $identity, $field = null);
 
     /**
      * Revoke all permissions for an identity
      *
-     * @param object $object
+     * @param object                                            $object
      * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string $field
+     * @param string                                            $field
      */
     public function revokeAllForIdentity($object, $identity, $field = null);
 

@@ -21,7 +21,7 @@ class AceManager extends AbstractAceManager
 {
     /**
      * @param AclInterface $acl
-     * @param bool $field
+     * @param bool         $field
      *
      * @return EntryInterface[]
      */
@@ -31,13 +31,13 @@ class AceManager extends AbstractAceManager
     }
 
     /**
-     * @param MutableAclInterface $acl
+     * @param MutableAclInterface       $acl
      * @param SecurityIdentityInterface $sid
-     * @param int $mask
-     * @param string $field
-     * @param int $index
-     * @param bool $granting
-     * @param string $strategy
+     * @param int                       $mask
+     * @param string                    $field
+     * @param int                       $index
+     * @param bool                      $granting
+     * @param string                    $strategy
      */
     protected function insertAce(
         MutableAclInterface $acl,
@@ -52,10 +52,10 @@ class AceManager extends AbstractAceManager
 
     /**
      * @param MutableAclInterface $acl
-     * @param int $index
-     * @param int $mask
-     * @param string $field
-     * @param string $strategy
+     * @param int                 $index
+     * @param int                 $mask
+     * @param string              $field
+     * @param string              $strategy
      */
     protected function updateAce(MutableAclInterface $acl, $index, $mask, $field = null, $strategy = null)
     {
@@ -63,8 +63,8 @@ class AceManager extends AbstractAceManager
 
     /**
      * @param MutableAclInterface $acl
-     * @param int $index
-     * @param string $field
+     * @param int                 $index
+     * @param string              $field
      */
     protected function deleteAce(MutableAclInterface $acl, $index, $field = null)
     {

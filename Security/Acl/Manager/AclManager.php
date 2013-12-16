@@ -38,8 +38,8 @@ class AclManager
 
     /**
      * @param SecurityContextInterface $context
-     * @param ClassAceManager $classAceManager
-     * @param ObjectAceManager $objectAceManager
+     * @param ClassAceManager          $classAceManager
+     * @param ObjectAceManager         $objectAceManager
      */
     public function __construct(SecurityContextInterface $context, ClassAceManager $classAceManager, ObjectAceManager $objectAceManager)
     {
@@ -67,7 +67,7 @@ class AclManager
     /**
      * Checks if the attributes are granted against the current token.
      *
-     * @param mixed $attributes
+     * @param mixed  $attributes
      * @param object $object
      * @param string $field
      *

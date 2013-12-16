@@ -13,7 +13,6 @@ namespace ProjectA\Bundle\AclBundle\Tests\Security\Acl\Manager\AceManager;
 
 use ProjectA\Bundle\AclBundle\Tests\Model\AbstractSecurityTest;
 use ProjectA\Bundle\AclBundle\Tests\Model\User;
-use Symfony\Component\Security\Acl\Dbal\Schema;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Role\Role;

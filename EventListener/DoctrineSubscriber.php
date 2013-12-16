@@ -1,10 +1,20 @@
 <?php
 
+/*
+ * This file is part of the ProjectA AclBundle.
+ *
+ * (c) 1up GmbH
+ * (c) Project A Ventures GmbH & Co. KG
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace ProjectA\Bundle\AclBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager;
 
 /**
  * EventSubscriber for doctrine that removes acl entries on
@@ -19,16 +29,23 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class DoctrineSubscriber implements EventSubscriber
 {
     /**
-     * @var ContainerInterface
+     * @var ObjectAceManager
      */
-    protected $container;
+    private $objectManager;
 
     /**
-     * @param ContainerInterface $container
+     * @var bool
      */
-    public function __construct(ContainerInterface $container)
+    private $isActive;
+
+    /**
+     * @param ObjectAceManager $objectManager
+     * @param bool             $isActive
+     */
+    public function __construct(ObjectAceManager $objectManager, $isActive)
     {
-        $this->container = $container;
+        $this->objectManager = $objectManager;
+        $this->isActive = $isActive;
     }
 
     /**
@@ -36,11 +53,8 @@ class DoctrineSubscriber implements EventSubscriber
      */
     public function preRemove(LifecycleEventArgs $args)
     {
-        $manager = $this->container->get('projecta_acl.ace.objectmanager');
-        $remove = $this->container->getParameter('projecta_acl.remove_orphans');
-
-        if ($remove) {
-            $manager->deleteAcl($args->getObject());
+        if ($this->isActive) {
+            $this->objectManager->deleteAcl($args->getObject());
         }
     }
 

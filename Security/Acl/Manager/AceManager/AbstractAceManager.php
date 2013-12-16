@@ -53,10 +53,10 @@ abstract class AbstractAceManager implements AceManagerInterface
     protected $defaultStrategy;
 
     /**
-     * @param MutableAclProviderInterface $provider
-     * @param SecurityContextInterface $context
+     * @param MutableAclProviderInterface              $provider
+     * @param SecurityContextInterface                 $context
      * @param ObjectIdentityRetrievalStrategyInterface $objectIdentityStrategy
-     * @param string $defaultStrategy
+     * @param string                                   $defaultStrategy
      */
     public function __construct(
         MutableAclProviderInterface $provider,
@@ -167,42 +167,41 @@ abstract class AbstractAceManager implements AceManagerInterface
 
     /**
      * @param AclInterface $acl
-     * @param bool $field
+     * @param bool         $field
      *
      * @return EntryInterface[]
      */
     abstract protected function getAces(AclInterface $acl, $field = null);
 
     /**
-     * @param MutableAclInterface $acl
+     * @param MutableAclInterface       $acl
      * @param SecurityIdentityInterface $sid
-     * @param int $mask
-     * @param string $field
-     * @param int $index
-     * @param bool $granting
-     * @param string $strategy
+     * @param int                       $mask
+     * @param string                    $field
+     * @param int                       $index
+     * @param bool                      $granting
+     * @param string                    $strategy
      */
     abstract protected function insertAce(MutableAclInterface $acl, SecurityIdentityInterface $sid, $mask, $field = null, $index = 0, $granting = true, $strategy = null);
 
     /**
      * @param MutableAclInterface $acl
-     * @param int $index
-     * @param int $mask
-     * @param string $field
-     * @param string $strategy
+     * @param int                 $index
+     * @param int                 $mask
+     * @param string              $field
+     * @param string              $strategy
      */
     abstract protected function updateAce(MutableAclInterface $acl, $index, $mask, $field = null, $strategy = null);
 
     /**
      * @param MutableAclInterface $acl
-     * @param int $index
-     * @param string $field
+     * @param int                 $index
+     * @param string              $field
      */
     abstract protected function deleteAce(MutableAclInterface $acl, $index, $field = null);
 
-
     /**
-     * @param object $object
+     * @param  object              $object
      * @return MutableAclInterface
      */
     protected function findAcl($object)
@@ -219,7 +218,7 @@ abstract class AbstractAceManager implements AceManagerInterface
     }
 
     /**
-     * @param object $object
+     * @param  object              $object
      * @return MutableAclInterface
      */
     protected function findOrCreateAcl($object)

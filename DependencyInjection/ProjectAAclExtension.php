@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is part of the ProjectA AclBundle.
+ *
+ * (c) 1up GmbH
+ * (c) Project A Ventures GmbH & Co. KG
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace ProjectA\Bundle\AclBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\DependencyInjection\Exception\BadMethodCallException;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
