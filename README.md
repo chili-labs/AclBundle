@@ -1,7 +1,7 @@
 # ProjectA AclBundle
 ###### Bundle for Symfony2 providing easy access to the complex ACL subsystem
 
-[![Latest Stable Version](https://poser.pugx.org/project-a/acl-bundle/v/stable.png)](https://packagist.org/packages/project-a/acl-bundle) [![Latest Unstable Version](https://poser.pugx.org/project-a/acl-bundle/v/unstable.png)](https://packagist.org/packages/project-a/acl-bundle) [![Total Downloads](https://poser.pugx.org/project-a/acl-bundle/downloads.png)](https://packagist.org/packages/project-a/acl-bundle) [![Build Status](https://secure.travis-ci.org/project-a/AclBundle.png?branch=master)](http://travis-ci.org/project-a/AclBundle) [![Coverage Status](https://coveralls.io/repos/project-a/AclBundle/badge.png?branch=master)](https://coveralls.io/r/project-a/AclBundle?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/project-a/acl-bundle/v/stable.png)](https://packagist.org/packages/project-a/acl-bundle) [![Latest Unstable Version](https://poser.pugx.org/project-a/acl-bundle/v/unstable.png)](https://packagist.org/packages/project-a/acl-bundle) [![Total Downloads](https://poser.pugx.org/project-a/acl-bundle/downloads.png)](https://packagist.org/packages/project-a/acl-bundle) [![Build Status](https://secure.travis-ci.org/project-a/AclBundle.png?branch=master)](http://travis-ci.org/project-a/AclBundle) [![Coverage Status](https://coveralls.io/repos/project-a/AclBundle/badge.png?branch=master)](https://coveralls.io/r/project-a/AclBundle?branch=master) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/c73329cc-4028-463d-9228-afcfc3ebffbe/mini.png)](https://insight.sensiolabs.com/projects/c73329cc-4028-463d-9228-afcfc3ebffbe)
 
 ## Description
 
