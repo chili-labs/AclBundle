@@ -90,4 +90,13 @@ interface AceManagerInterface
      * @return self
      */
     public function deleteAcl($object);
+
+    /**
+     * Preload Acls for all the objects
+     *
+     * @param object[] $objects
+     *
+     * @return self
+     */
+    public function preload($objects);
 }

@@ -175,6 +175,20 @@ abstract class AbstractAceManager implements AceManagerInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function preload($objects)
+    {
+        $oids = array();
+        foreach ($objects as $object) {
+            $oids[] = $this->createObjectIdentity($object);
+        }
+        $this->provider->findAcls($oids);
+
+        return $this;
+    }
+
+    /**
      * @param AclInterface $acl
      * @param bool         $field
      *
