@@ -15,6 +15,7 @@ namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
+use Symfony\Component\Security\Acl\Exception\NotAllAclsFoundException;
 use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclInterface;
@@ -183,7 +184,10 @@ abstract class AbstractAceManager implements AceManagerInterface
         foreach ($objects as $object) {
             $oids[] = $this->createObjectIdentity($object);
         }
-        $this->provider->findAcls($oids);
+        try {
+            $this->provider->findAcls($oids);
+        } catch (AclNotFoundException $exception) {
+        }
 
         return $this;
     }
