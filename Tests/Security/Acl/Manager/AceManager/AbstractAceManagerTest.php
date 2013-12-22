@@ -73,4 +73,10 @@ class AbstractAceManagerTest extends AbstractSecurityTest
         $this->objectmanager->revokeAll($this->object);
         $this->assertTrue(true);
     }
+
+    public function testPreloadDoesNotThrowException()
+    {
+        $this->objectmanager->preload(array($this->object));
+        $this->assertTrue(true);
+    }
 }
