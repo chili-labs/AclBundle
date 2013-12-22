@@ -14,6 +14,9 @@ namespace ProjectA\Bundle\AclBundle;
 use ProjectA\Bundle\AclBundle\DependencyInjection\ProjectAAclExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * @author Daniel Tschinder <daniel.tschinder@project-a.com>
+ */
 class ProjectAAclBundle extends Bundle
 {
     public function getContainerExtension()
