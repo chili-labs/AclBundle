@@ -18,8 +18,6 @@ class SomeObject
     private $foo;
     private $bar;
 
-    private $secured;
-
     public function __construct($id, $foo = null, $bar = null)
     {
         $this->id = $id;
