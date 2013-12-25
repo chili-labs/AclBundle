@@ -5,7 +5,7 @@
 
 ## Description
 
-WIP
+This Symfony 2 Bundle provides an easy api to the security-acl component and an eventlistener for automatic acl cleanup upon removal of domain objects. The installation is simple and by default does not change any behavior of the application.
 
 ## Installation
 
