@@ -5,8 +5,33 @@
 
 ## Description
 
-This Symfony 2 Bundle provides an easy api to the security-acl component and an eventlistener for automatic acl cleanup upon removal of domain objects. The installation is simple and by default does not change any behavior of the application.
+This Symfony 2 Bundle provides an easy api to the security-acl component and an eventlistener for automatic acl cleanup upon removal of domain objects. The installation is simple and by default does not change any behavior of your application.
 
+Without this bundle you normaly do this (taken from the [ACL docs](http://symfony.com/doc/current/cookbook/security/acl.html#creating-an-acl-and-adding-an-ace)):
+```php
+// creating the ACL
+$aclProvider = $this->get('security.acl.provider');
+$objectIdentity = ObjectIdentity::fromDomainObject($domainObject);
+$acl = $aclProvider->createAcl($objectIdentity);
+
+// retrieving the security identity of the currently logged-in user
+$securityContext = $this->get('security.context');
+$user = $securityContext->getToken()->getUser();
+$securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+// grant owner access
+$acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+$aclProvider->updateAcl($acl);
+```
+With this bundle you can simplify it to:
+```php
+$securityContext = $this->get('security.context');
+$user = $securityContext->getToken()->getUser();
+
+$aclManager = $this->get('projecta_acl.manager');
+$aclManager->manageObjectAces()
+    ->grant($domainObject, MaskBuilder::MASK_OWNER, $user);
+```
 ## Installation
 
 The recommended way to install the AclBundle is [through
