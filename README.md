@@ -5,9 +5,9 @@
 
 ## Description
 
-This Symfony 2 Bundle provides an easy api to the security-acl component and an eventlistener for automatic acl cleanup upon removal of domain objects. The installation is simple and by default does not change any behavior of your application.
+This Symfony 2 Bundle provides an easy api to the Security/ACL component and an eventlistener for automatic ACL cleanup upon removal of domain objects. The installation is simple and by default does not change any behavior of your application.
 
-Without this bundle you normaly do this (taken from the [ACL docs](http://symfony.com/doc/current/cookbook/security/acl.html#creating-an-acl-and-adding-an-ace)):
+Without this bundle you normaly do this (taken from the [ACL docs][1]):
 ```php
 // creating the ACL
 $aclProvider = $this->get('security.acl.provider');
@@ -44,11 +44,22 @@ run the `php composer.phar install` command to install it:
         }
     }
 
-Alternatively, you can download the [`acl-bundle.zip`][1] file and extract it.
+Alternatively, you can download the [`acl-bundle.zip`][2] file and extract it.
 
-## Usage
+## Documentation
 
-WIP
+The documentation is part of the bundle and can be found in Resources/doc.
+
+1. Installation
+2. Working with ACEs
+    1. Object vs. Class ACEs
+    2. Granting
+    3. Overwriting
+    4. Revoking
+    5. Deleting ACLs
+    6. Preloading
+4. Doctrine ACL cleanup eventlistener
+5. API
 
 ## Tests
 
@@ -65,8 +76,5 @@ ProjectA AclBundle is licensed under the MIT license.
 
 [www.project-a.com](http://www.project-a.com/en/working-with-project-a/)
 
-[1]: https://github.com/project-a/AclBundle/archive/master.zip
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/project-a/aclbundle/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
+[1]: http://symfony.com/doc/current/cookbook/security/acl.html#creating-an-acl-and-adding-an-ace
+[2]: https://github.com/project-a/AclBundle/archive/master.zip
