@@ -227,7 +227,8 @@ abstract class AbstractAceManager implements AceManagerInterface
     abstract protected function deleteAce(MutableAclInterface $acl, $index, $field = null);
 
     /**
-     * @param  object              $object
+     * @param object $object
+     *
      * @return MutableAclInterface
      */
     protected function findAcl($object)
@@ -244,7 +245,8 @@ abstract class AbstractAceManager implements AceManagerInterface
     }
 
     /**
-     * @param  object              $object
+     * @param object $object
+     *
      * @return MutableAclInterface
      */
     protected function findOrCreateAcl($object)
@@ -259,7 +261,7 @@ abstract class AbstractAceManager implements AceManagerInterface
     }
 
     /**
-     * @param string|TokenInterface|RoleInterface|UserInterface $identity
+     * @param string|TokenInterface|RoleInterface|UserInterface|SecurityIdentityInterface $identity
      *
      * @return RoleSecurityIdentity|UserSecurityIdentity
      *
@@ -273,6 +275,8 @@ abstract class AbstractAceManager implements AceManagerInterface
             return UserSecurityIdentity::fromToken($identity);
         } elseif ($identity instanceof RoleInterface || is_string($identity)) {
             return new RoleSecurityIdentity($identity);
+        } elseif ($identity instanceof SecurityIdentityInterface) {
+            return $identity;
         }
 
         throw new \InvalidArgumentException('Could not create a valid SecurityIdentity with the provided identity information');
