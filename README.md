@@ -32,19 +32,6 @@ $aclManager = $this->get('projecta_acl.manager');
 $aclManager->manageObjectAces()
     ->grant($domainObject, MaskBuilder::MASK_OWNER, $user);
 ```
-## Installation
-
-The recommended way to install the AclBundle is [through
-composer](http://getcomposer.org). Just create a `composer.json` file and
-run the `php composer.phar install` command to install it:
-
-    {
-        "require": {
-            "project-a/acl-bundle": "~1.0"
-        }
-    }
-
-Alternatively, you can download the [`acl-bundle.zip`][2] file and extract it.
 
 ## Documentation
 
@@ -77,4 +64,3 @@ ProjectA AclBundle is licensed under the MIT license.
 [www.project-a.com](http://www.project-a.com/en/working-with-project-a/)
 
 [1]: http://symfony.com/doc/current/cookbook/security/acl.html#creating-an-acl-and-adding-an-ace
-[2]: https://github.com/project-a/AclBundle/archive/master.zip
