@@ -11,6 +11,7 @@
 
 namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager;
 
+use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -23,11 +24,11 @@ interface AceManagerInterface
     /**
      * Grant a permission for an object
      *
-     * @param object                                            $object
-     * @param int                                               $mask
-     * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string                                            $field
-     * @param string                                            $strategy
+     * @param object                                                                      $object
+     * @param int                                                                         $mask
+     * @param string|TokenInterface|RoleInterface|UserInterface|SecurityIdentityInterface $identity
+     * @param string                                                                      $field
+     * @param string                                                                      $strategy
      *
      * @return self
      */
@@ -36,11 +37,11 @@ interface AceManagerInterface
     /**
      * Revoke all permissions and grant the supplied one only
      *
-     * @param object                                            $object
-     * @param int                                               $mask
-     * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string                                            $field
-     * @param string                                            $strategy
+     * @param object                                                                      $object
+     * @param int                                                                         $mask
+     * @param string|TokenInterface|RoleInterface|UserInterface|SecurityIdentityInterface $identity
+     * @param string                                                                      $field
+     * @param string                                                                      $strategy
      *
      * @return self
      */
@@ -49,10 +50,10 @@ interface AceManagerInterface
     /**
      * Revoke a permission for an object
      *
-     * @param object                                            $object
-     * @param int                                               $mask
-     * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string                                            $field
+     * @param object                                                                      $object
+     * @param int                                                                         $mask
+     * @param string|TokenInterface|RoleInterface|UserInterface|SecurityIdentityInterface $identity
+     * @param string                                                                      $field
      *
      * @return self
      */
@@ -61,9 +62,9 @@ interface AceManagerInterface
     /**
      * Revoke all permissions for an identity
      *
-     * @param object                                            $object
-     * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string                                            $field
+     * @param object                                                                      $object
+     * @param string|TokenInterface|RoleInterface|UserInterface|SecurityIdentityInterface $identity
+     * @param string                                                                      $field
      *
      * @return self
      */
