@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 interface AceManagerInterface
 {
     /**
-     * Grant a permission for an object
+     * Grant a permission to the identity for an object
      *
      * @param object                                                                      $object
      * @param int                                                                         $mask
@@ -35,20 +35,7 @@ interface AceManagerInterface
     public function grant($object, $mask, $identity, $field = null, $strategy = null);
 
     /**
-     * Revoke all permissions and grant the supplied one only
-     *
-     * @param object                                                                      $object
-     * @param int                                                                         $mask
-     * @param string|TokenInterface|RoleInterface|UserInterface|SecurityIdentityInterface $identity
-     * @param string                                                                      $field
-     * @param string                                                                      $strategy
-     *
-     * @return self
-     */
-    public function overwrite($object, $mask, $identity, $field = null, $strategy = null);
-
-    /**
-     * Revoke a permission for an object
+     * Revoke a granted permission from the identity for the object
      *
      * @param object                                                                      $object
      * @param int                                                                         $mask
@@ -60,7 +47,7 @@ interface AceManagerInterface
     public function revoke($object, $mask, $identity, $field = null);
 
     /**
-     * Revoke all permissions for an identity
+     * Revoke all granted permissions from the identity
      *
      * @param object                                                                      $object
      * @param string|TokenInterface|RoleInterface|UserInterface|SecurityIdentityInterface $identity
@@ -71,7 +58,7 @@ interface AceManagerInterface
     public function revokeAllForIdentity($object, $identity, $field = null);
 
     /**
-     * Revoke all permissions for an object
+     * Revoke all granted permissions for an object
      *
      * @param object $object
      * @param string $field

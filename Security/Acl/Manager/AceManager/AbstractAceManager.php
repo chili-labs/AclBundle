@@ -87,17 +87,6 @@ abstract class AbstractAceManager implements AceManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function overwrite($object, $mask, $identity, $field = null, $strategy = null)
-    {
-        $this->revokeAllForIdentity($object, $identity, $field);
-        $this->grant($object, $mask, $identity, $field, $strategy);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function revoke($object, $mask, $identity, $field = null)
     {
         if (null === ($acl = $this->findAcl($object))) {

@@ -24,6 +24,7 @@ $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
 $aclProvider->updateAcl($acl);
 ```
 With this bundle you can simplify it to:
+
 ```php
 $securityContext = $this->get('security.context');
 $user = $securityContext->getToken()->getUser();

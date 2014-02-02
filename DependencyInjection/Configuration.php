@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->booleanNode('remove_orphans')->defaultFalse()->end()
                 ->enumNode('default_strategy')
-                    ->values(array('any', 'all', 'equal'))
+                    ->values(array('all', 'any', 'equal'))
                     ->defaultValue('all')
                 ->end()
             ->end()
