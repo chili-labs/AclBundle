@@ -11,6 +11,7 @@
 
 namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager;
 
+use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -21,56 +22,43 @@ use Symfony\Component\Security\Core\User\UserInterface;
 interface AceManagerInterface
 {
     /**
-     * Grant a permission for an object
+     * Grant a permission to the identity for an object
      *
-     * @param object                                            $object
-     * @param int                                               $mask
-     * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string                                            $field
-     * @param string                                            $strategy
+     * @param object                                                                      $object
+     * @param int                                                                         $mask
+     * @param string|TokenInterface|RoleInterface|UserInterface|SecurityIdentityInterface $identity
+     * @param string                                                                      $field
+     * @param string                                                                      $strategy
      *
      * @return self
      */
     public function grant($object, $mask, $identity, $field = null, $strategy = null);
 
     /**
-     * Revoke all permissions and grant the supplied one only
+     * Revoke a granted permission from the identity for the object
      *
-     * @param object                                            $object
-     * @param int                                               $mask
-     * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string                                            $field
-     * @param string                                            $strategy
-     *
-     * @return self
-     */
-    public function overwrite($object, $mask, $identity, $field = null, $strategy = null);
-
-    /**
-     * Revoke a permission for an object
-     *
-     * @param object                                            $object
-     * @param int                                               $mask
-     * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string                                            $field
+     * @param object                                                                      $object
+     * @param int                                                                         $mask
+     * @param string|TokenInterface|RoleInterface|UserInterface|SecurityIdentityInterface $identity
+     * @param string                                                                      $field
      *
      * @return self
      */
     public function revoke($object, $mask, $identity, $field = null);
 
     /**
-     * Revoke all permissions for an identity
+     * Revoke all granted permissions from the identity
      *
-     * @param object                                            $object
-     * @param string|TokenInterface|RoleInterface|UserInterface $identity
-     * @param string                                            $field
+     * @param object                                                                      $object
+     * @param string|TokenInterface|RoleInterface|UserInterface|SecurityIdentityInterface $identity
+     * @param string                                                                      $field
      *
      * @return self
      */
     public function revokeAllForIdentity($object, $identity, $field = null);
 
     /**
-     * Revoke all permissions for an object
+     * Revoke all granted permissions for an object
      *
      * @param object $object
      * @param string $field
