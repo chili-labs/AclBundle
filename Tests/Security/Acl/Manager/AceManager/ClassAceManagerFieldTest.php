@@ -39,19 +39,6 @@ class ClassAceManagerFieldTest extends AbstractSecurityTest
         $this->assertFalse($this->manager->isGranted('DELETE', $this->object));
     }
 
-    public function testOverwrite()
-    {
-        $this->classmanager->grant($this->object, MaskBuilder::MASK_EDIT, $this->token, 'foo');
-
-        $this->assertTrue($this->manager->isGranted('VIEW', $this->object, 'foo'));
-        $this->assertTrue($this->manager->isGranted('EDIT', $this->object, 'foo'));
-
-        $this->classmanager->overwrite($this->object, MaskBuilder::MASK_VIEW, $this->token, 'foo');
-
-        $this->assertTrue($this->manager->isGranted('VIEW', $this->object, 'foo'));
-        $this->assertFalse($this->manager->isGranted('EDIT', $this->object, 'foo'));
-    }
-
     public function testRevoke()
     {
         $this->classmanager->grant($this->object, MaskBuilder::MASK_VIEW, $this->token, 'foo');

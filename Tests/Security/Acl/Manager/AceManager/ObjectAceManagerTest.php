@@ -36,19 +36,6 @@ class ObjectAceManagerTest extends AbstractSecurityTest
         $this->assertTrue($this->manager->isGranted('DELETE', $this->object));
     }
 
-    public function testOverwrite()
-    {
-        $this->objectmanager->grant($this->object, MaskBuilder::MASK_EDIT, $this->token);
-
-        $this->assertTrue($this->manager->isGranted('VIEW', $this->object));
-        $this->assertTrue($this->manager->isGranted('EDIT', $this->object));
-
-        $this->objectmanager->overwrite($this->object, MaskBuilder::MASK_VIEW, $this->token);
-
-        $this->assertTrue($this->manager->isGranted('VIEW', $this->object));
-        $this->assertFalse($this->manager->isGranted('EDIT', $this->object));
-    }
-
     public function testRevoke()
     {
         $this->objectmanager->grant($this->object, MaskBuilder::MASK_VIEW, $this->token);
