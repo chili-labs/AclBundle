@@ -19,6 +19,7 @@ use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AclManager;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Security\Acl\Dbal\Schema;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 abstract class AbstractSecurityTest extends WebTestCase
@@ -92,7 +93,7 @@ abstract class AbstractSecurityTest extends WebTestCase
     }
 
     /**
-     * @param array $roles
+     * @param string[]|RoleInterface[] $roles
      *
      * @return UsernamePasswordToken
      */
