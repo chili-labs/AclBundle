@@ -182,7 +182,7 @@ abstract class AbstractAceManager implements AceManagerInterface
 
     /**
      * @param AclInterface $acl
-     * @param bool         $field
+     * @param string       $field
      *
      * @return EntryInterface[]
      */
@@ -226,6 +226,7 @@ abstract class AbstractAceManager implements AceManagerInterface
 
         try {
             $acl = $this->provider->findAcl($identity);
+            $this->checkAclType($acl);
         } catch (AclNotFoundException $e) {
             $acl = null;
         }
@@ -244,6 +245,7 @@ abstract class AbstractAceManager implements AceManagerInterface
         if (null === $acl) {
             $identity = $this->createObjectIdentity($object);
             $acl = $this->provider->createAcl($identity);
+            $this->checkAclType($acl);
         }
 
         return $acl;
@@ -279,5 +281,17 @@ abstract class AbstractAceManager implements AceManagerInterface
     protected function createObjectIdentity($object)
     {
         return $this->objectIdentityStrategy->getObjectIdentity($object);
+    }
+
+    /**
+     * @param AclInterface $acl
+     *
+     * @throws \LogicException if the provider is not creating mutable acl classes
+     */
+    private function checkAclType(AclInterface $acl)
+    {
+        if (!$acl instanceof MutableAclInterface) {
+            throw new \LogicException('The acl provider needs to create acls of type MutableAclInterface');
+        }
     }
 }
