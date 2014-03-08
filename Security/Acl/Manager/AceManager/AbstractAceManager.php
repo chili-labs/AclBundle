@@ -175,6 +175,7 @@ abstract class AbstractAceManager implements AceManagerInterface
         try {
             $this->provider->findAcls($oids);
         } catch (AclNotFoundException $exception) {
+            // ignore exception, as we do not care for non existant acls
         }
 
         return $this;
