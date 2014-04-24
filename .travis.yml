@@ -9,7 +9,7 @@ before_script:
     - composer install --prefer-source
 
 install:
-    - composer require symfony/symfony:~{SYMFONY_VERSION}.*@dev --no-update
+    - composer require symfony/symfony:{SYMFONY_VERSION}.*@dev --no-update
 
 script:
     - phpunit --coverage-clover build/logs/clover.xml
