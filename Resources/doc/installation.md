@@ -43,13 +43,14 @@ public function registerBundles()
 }
 ```
 
-> After enabling the Bundle in your kernel you will not notice any difference, as using the ```AclManager```is optional and the eventlistener for doctrine is not enabled by default.
+> After enabling the Bundle in your kernel you will not notice any difference, as using the ```AclManager``` is optional and the eventlistener for doctrine is not enabled by default.
 
 This is already everything you need to start using this bundle.
 
 ## Next steps
 
 [Working with the ACL Manager](working_with_the_acl_manager.md) - See how to use the manager
+
 [Doctrine ACL cleanup eventlistener](doctrine_acl_cleanup_eventlistener.md) - Add automatic cleanup of ACLs upon removing of mapped doctrine objects
 
 [1]: http://getcomposer.org
