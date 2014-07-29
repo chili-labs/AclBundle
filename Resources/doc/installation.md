@@ -17,7 +17,7 @@ Installation is done in two steps like any other Bundle.
 
 ### 1. Download the bundle
 
-The recommended way to install the AclBundle is [through composer][1]. Just create a `composer.json` file and run the `php composer.phar install` command to install it:
+The recommended way to install the AclBundle is [through composer][1]. Just create a `composer.json` file and run the `composer install` command to install it:
 
 ```json
 {
@@ -49,7 +49,7 @@ This is already everything you need to start using this bundle.
 
 ## Next steps
 
-[Working with ACEs](working_with_aces.md) - See how to use the manager
+[Working with the ACL Manager](working_with_the_acl_manager.md) - See how to use the manager
 [Doctrine ACL cleanup eventlistener](doctrine_acl_cleanup_eventlistener.md) - Add automatic cleanup of ACLs upon removing of mapped doctrine objects
 
 [1]: http://getcomposer.org
