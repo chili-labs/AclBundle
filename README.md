@@ -53,8 +53,8 @@ The documentation is part of the bundle and can be found in Resources/doc.
 
 To run the test suite, you need [composer](http://getcomposer.org).
 
-    $ php composer.phar install
-    $ vendor/bin/phpunit
+    $ composer install
+    $ phpunit
 
 ## License
 
