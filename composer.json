@@ -33,7 +33,7 @@
         "doctrine/mongodb-odm": "Allows you to remove Acl entries automatically. (When using MongoDB for Acl)"
     },
     "autoload": {
-        "psr-4": { "ProjectA\\Bundle\\AclBundle": "" }
+        "psr-4": { "ProjectA\\Bundle\\AclBundle\\": "" }
     },
     "extra": {
        "branch-alias": {
