@@ -5,25 +5,49 @@
 
 ## Description
 
-WIP
+This Symfony 2 Bundle provides an easy api to the Security/ACL component and an eventlistener for automatic ACL cleanup upon removal of domain objects. The installation is simple and by default does not change any behavior of your application.
 
-## Installation
+Without this bundle you normaly do this (taken from the [ACL docs][1]):
+```php
+// creating the ACL
+$aclProvider = $this->get('security.acl.provider');
+$objectIdentity = ObjectIdentity::fromDomainObject($domainObject);
+$acl = $aclProvider->createAcl($objectIdentity);
 
-The recommended way to install the AclBundle is [through
-composer](http://getcomposer.org). Just create a `composer.json` file and
-run the `php composer.phar install` command to install it:
+// retrieving the security identity of the currently logged-in user
+$securityContext = $this->get('security.context');
+$user = $securityContext->getToken()->getUser();
+$securityIdentity = UserSecurityIdentity::fromAccount($user);
 
-    {
-        "require": {
-            "project-a/acl-bundle": "~1.0"
-        }
-    }
+// grant owner access
+$acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+$aclProvider->updateAcl($acl);
+```
+With this bundle you can simplify it to:
 
-Alternatively, you can download the [`acl-bundle.zip`][1] file and extract it.
+```php
+$securityContext = $this->get('security.context');
+$user = $securityContext->getToken()->getUser();
 
-## Usage
+$aclManager = $this->get('projecta_acl.manager');
+$aclManager->manageObjectAces()
+    ->grant($domainObject, MaskBuilder::MASK_OWNER, $user);
+```
 
-WIP
+## Documentation
+
+The documentation is part of the bundle and can be found in Resources/doc.
+
+1. Installation
+2. Working with ACEs
+    1. Object vs. Class ACEs
+    2. Granting
+    3. Overwriting
+    4. Revoking
+    5. Deleting ACLs
+    6. Preloading
+4. Doctrine ACL cleanup eventlistener
+5. API
 
 ## Tests
 
@@ -40,8 +64,4 @@ ProjectA AclBundle is licensed under the MIT license.
 
 [www.project-a.com](http://www.project-a.com/en/working-with-project-a/)
 
-[1]: https://github.com/project-a/AclBundle/archive/master.zip
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/project-a/aclbundle/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
+[1]: http://symfony.com/doc/current/cookbook/security/acl.html#creating-an-acl-and-adding-an-ace
