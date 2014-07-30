@@ -37,6 +37,10 @@ if ($aclManager->isGranted(MaskBuilder::MASK_EDIT, $object, 'myfield')) {
 
 ## ACE Manager
 
+> Notice that the two AceManagers have a fluid interface. You can
+> chain calls like
+> this: ```$aceManager->grant(...)->grant(...)->revoke(...)```
+
 ### Granting
 
 ##### Object
@@ -109,5 +113,14 @@ $aceManager->revokeAllForIdentity($object, $user, 'field');
 ```
 
 ### Deleting ACLs
+
+Deleting the ACL for an ```$object``` is the same as if you would remove all
+entries from the storage. This function is probably very useful when
+you are going to remove the ```$object``` and want to cleanup all it's
+ACL entries.
+
+```php
+$aceManager->deleteAcl($object);
+```
 
 ### Preloading
