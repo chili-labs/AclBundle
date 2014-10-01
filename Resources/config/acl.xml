@@ -19,14 +19,12 @@
 
         <service id="projecta_acl.ace.classmanager" class="%projecta_acl.ace.classmanager.class%">
             <argument type="service" id="security.acl.provider" />
-            <argument type="service" id="security.context" />
             <argument type="service" id="security.acl.object_identity_retrieval_strategy" />
             <argument>%projecta_acl.default_strategy%</argument>
         </service>
 
         <service id="projecta_acl.ace.objectmanager" class="%projecta_acl.ace.objectmanager.class%">
             <argument type="service" id="security.acl.provider" />
-            <argument type="service" id="security.context" />
             <argument type="service" id="security.acl.object_identity_retrieval_strategy" />
             <argument>%projecta_acl.default_strategy%</argument>
         </service>

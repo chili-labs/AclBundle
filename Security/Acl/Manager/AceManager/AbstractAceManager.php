@@ -24,7 +24,6 @@ use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterfac
 use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -38,11 +37,6 @@ abstract class AbstractAceManager implements AceManagerInterface
     private $provider;
 
     /**
-     * @var SecurityContextInterface
-     */
-    private $context;
-
-    /**
      * @var ObjectIdentityRetrievalStrategyInterface
      */
     private $objectIdentityStrategy;
@@ -54,18 +48,15 @@ abstract class AbstractAceManager implements AceManagerInterface
 
     /**
      * @param MutableAclProviderInterface              $provider
-     * @param SecurityContextInterface                 $context
      * @param ObjectIdentityRetrievalStrategyInterface $objectIdentityStrategy
      * @param string                                   $defaultStrategy
      */
     public function __construct(
         MutableAclProviderInterface $provider,
-        SecurityContextInterface $context,
         ObjectIdentityRetrievalStrategyInterface $objectIdentityStrategy,
         $defaultStrategy
     ) {
         $this->provider = $provider;
-        $this->context = $context;
         $this->objectIdentityStrategy = $objectIdentityStrategy;
         $this->defaultStrategy = $defaultStrategy;
     }
