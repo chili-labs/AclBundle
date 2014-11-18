@@ -1,11 +1,11 @@
-# ProjectA AclBundle
+# ChiliLabs AclBundle
 ###### Bundle for Symfony2 providing easy access to the complex ACL subsystem
 
 [![Latest Stable Version](https://poser.pugx.org/project-a/acl-bundle/v/stable.png)](https://packagist.org/packages/project-a/acl-bundle)
 [![Latest Unstable Version](https://poser.pugx.org/project-a/acl-bundle/v/unstable.png)](https://packagist.org/packages/project-a/acl-bundle)
 [![Total Downloads](https://poser.pugx.org/project-a/acl-bundle/downloads.png)](https://packagist.org/packages/project-a/acl-bundle)
-[![Build Status](https://secure.travis-ci.org/project-a/AclBundle.png?branch=master)](http://travis-ci.org/project-a/AclBundle)
-[![Coverage Status](https://coveralls.io/repos/project-a/AclBundle/badge.png?branch=master)](https://coveralls.io/r/project-a/AclBundle?branch=master)
+[![Build Status](https://secure.travis-ci.org/chili-labs/AclBundle.png?branch=master)](http://travis-ci.org/chili-labs/AclBundle)
+[![Coverage Status](https://coveralls.io/repos/chili-labs/AclBundle/badge.png?branch=master)](https://coveralls.io/r/chili-labs/AclBundle?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/c73329cc-4028-463d-9228-afcfc3ebffbe/mini.png)](https://insight.sensiolabs.com/projects/c73329cc-4028-463d-9228-afcfc3ebffbe)
 
 ## Description
@@ -66,10 +66,6 @@ To run the test suite, you need [composer](http://getcomposer.org).
 
 ## License
 
-ProjectA AclBundle is licensed under the MIT license.
-
-## More about Project A Ventures
-
-[www.project-a.com](http://www.project-a.com/en/working-with-project-a/)
+ChiliLabs AclBundle is licensed under the MIT license.
 
 [1]: http://symfony.com/doc/current/cookbook/security/acl.html#creating-an-acl-and-adding-an-ace
