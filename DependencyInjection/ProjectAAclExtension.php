@@ -3,8 +3,7 @@
 /*
  * This file is part of the ProjectA AclBundle.
  *
- * (c) 1up GmbH
- * (c) Project A Ventures GmbH & Co. KG
+ * (c) Daniel Tschinder
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * @author Daniel Tschinder <daniel.tschinder@project-a.com>
+ * @author Daniel Tschinder <daniel@tschinder.de>
  */
 class ProjectAAclExtension extends Extension
 {

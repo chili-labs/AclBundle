@@ -3,8 +3,7 @@
 /*
  * This file is part of the ProjectA AclBundle.
  *
- * (c) 1up GmbH
- * (c) Project A Ventures GmbH & Co. KG
+ * (c) Daniel Tschinder
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,6 +12,9 @@
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
+/**
+ * @author Daniel Tschinder <daniel@tschinder.de>
+ */
 class AppKernel extends Kernel
 {
     public function registerBundles()

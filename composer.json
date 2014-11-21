@@ -3,14 +3,12 @@
     "type": "symfony-bundle",
     "description": "Providing an easy way to work with the Symfony Security Acl.",
     "keywords": ["symfony2", "acl", "security"],
-    "homepage": "http://www.project-a.com",
     "license": "MIT",
     "authors": [
         {
             "name": "Daniel Tschinder",
-            "email": "daniel.tschinder@project-a.com",
-            "homepage": "http://www.project-a.com",
-            "role": "Senior Developer"
+            "email": "daniel@tschinder.de",
+            "homepage": "http://www.tschinder.de"
         }
     ],
     "require": {

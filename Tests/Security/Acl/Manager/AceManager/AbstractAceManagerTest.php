@@ -3,7 +3,7 @@
 /*
  * This file is part of the ProjectA AclBundle.
  *
- * (c) Project A Ventures GmbH & Co. KG
+ * (c) Daniel Tschinder
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,6 +17,9 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Role\Role;
 
+/**
+ * @author Daniel Tschinder <daniel@tschinder.de>
+ */
 class AbstractAceManagerTest extends AbstractSecurityTest
 {
     public function testGrantSingleMaskForUser()

@@ -3,8 +3,7 @@
 /*
  * This file is part of the ProjectA AclBundle.
  *
- * (c) 1up GmbH
- * (c) Project A Ventures GmbH & Co. KG
+ * (c) Daniel Tschinder
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -22,6 +21,9 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @author Daniel Tschinder <daniel@tschinder.de>
+ */
 abstract class AbstractSecurityTest extends WebTestCase
 {
     protected $client;

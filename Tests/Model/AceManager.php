@@ -3,7 +3,7 @@
 /*
  * This file is part of the ProjectA AclBundle.
  *
- * (c) Project A Ventures GmbH & Co. KG
+ * (c) Daniel Tschinder
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,6 +17,9 @@ use Symfony\Component\Security\Acl\Model\EntryInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
 
+/**
+ * @author Daniel Tschinder <daniel@tschinder.de>
+ */
 class AceManager extends AbstractAceManager
 {
     /**
