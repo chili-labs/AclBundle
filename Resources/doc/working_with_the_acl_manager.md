@@ -9,7 +9,7 @@ Simply retrieve the manager by doing the following.
 $aclManager = $container->get('projecta_acl.manager');
 ```
 
-To get the one of the ACE Managers you can either use the
+To get one of the ACE Managers you can either use the
 methods ```manageObjectAces()``` and ```manageClassAces()``` or
 retrieve them directly from the DIC. Whatever suits your needs.
 
