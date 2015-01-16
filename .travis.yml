@@ -8,6 +8,7 @@ php:
 before_install:
     - composer require satooshi/php-coveralls --no-update
     - sh -c "if [ '$SYMFONY_DEPS_VERSION' != '' ]; then composer require symfony/symfony:${SYMFONY_DEPS_VERSION}.*@dev --no-update; fi"
+    - sh -c "if [ '$SYMFONY_DEPS_VERSION' = '' ]; then composer require symfony/symfony:2.6.*@dev --no-update; fi"
     -
 install:
     - composer install --prefer-source
