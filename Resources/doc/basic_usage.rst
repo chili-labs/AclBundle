@@ -1,5 +1,5 @@
-Working with the ACL Manager
-============================
+Basic Usage
+===========
 
 Retrieving the ACL und ACE Managers
 -----------------------------------
