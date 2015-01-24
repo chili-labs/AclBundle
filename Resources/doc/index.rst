@@ -1,13 +1,73 @@
-AclBundle Documentation
-================================
+Welcome to the AclBundle Documentation!
+=======================================
 
-This is the documentation for this Bundle. Feel free to fork and change
-it if you find errors or have ideas to make it better.
+Requirements
+------------
+
+The AclBundle has only a few dependencies that need to be fulfilled. It
+requires PHP version 5.3, as namespaces are used and the following composer
+packages:
+
+-  doctrine/common with at least version 2.2
+-  symfony/security with at least version 2.3
+
+.. note::
+
+    It might also work with earlier versions, but was not tested with
+    them. If you get it working with earlier versions, feel free to open
+    a pull request.
+
+Installation
+------------
+
+Installation is done in two steps like any other Bundle.
+
+1. Download the bundle
+~~~~~~~~~~~~~~~~~~~~~~
+
+The recommended way to install the AclBundle is through `Composer`_.
+Just run the following command to get the latest version:
+
+.. code-block:: bash
+
+    $ composer require behat/mink
+
+2. Enable the bundle
+~~~~~~~~~~~~~~~~~~~~
+
+Enable the bundle in the kernel of your application:
+
+.. code-block:: php
+
+    // app/AppKernel.php
+
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...
+            new ProjectA\Bundle\AclBundle\ProjectAAclBundle(),
+        );
+    }
+
+.. note::
+
+    After enabling the Bundle in your kernel you will not notice any
+    difference, as using the ``AclManager`` is optional and the
+    eventlistener for doctrine is not enabled by default.
+
+This is already everything you need to do to get started with the
+AclBundle.
+
+Guides
+------
+
+Learn more about how to use this bundle.
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
 
-    installation
     basic_usage
     doctrine_acl_cleanup_eventlistener
-    reference_guide
+    configuration_reference
+
+.. _Composer: https://getcomposer.org

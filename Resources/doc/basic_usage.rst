@@ -7,7 +7,7 @@ Retrieving the ACL und ACE Managers
 The ACL Manager is registered as service in the symfony DIC. Simply
 retrieve the manager by doing the following.
 
-.. code:: php
+.. code-block:: php
 
     $aclManager = $container->get('projecta_acl.manager');
 
@@ -15,7 +15,7 @@ To get one of the ACE Managers you can either use the methods
 ``manageObjectAces()`` and ``manageClassAces()`` or retrieve them
 directly from the DIC. Whatever suits your needs.
 
-.. code:: php
+.. code-block:: php
 
     $objectAceManager = $container->get('projecta_acl.ace.objectmanager');
     $classAceManager = $container->get('projecta_acl.ace.classmanager');
@@ -27,7 +27,7 @@ Besides the ability to get the two ACE managers you can also check
 granted permissions for the current user. The method is called
 ``isGranted()`` and should explain it's functionality by itself.
 
-.. code:: php
+.. code-block:: php
 
     if ($aclManager->isGranted(MaskBuilder::MASK_EDIT, $object)) {
         // editing $object is allowed
@@ -40,9 +40,14 @@ granted permissions for the current user. The method is called
 ACE Manager
 -----------
 
+.. note::
+
     Notice that the two AceManagers have a fluid interface. You can
     chain calls like this:
-    ``$aceManager->grant(...)->grant(...)->revoke(...)``
+
+    .. code-block:: php
+
+        $aceManager->grant(...)->grant(...)->revoke(...);
 
 Granting
 ~~~~~~~~
@@ -53,7 +58,7 @@ Object
 You can grant rights on objects with one simple call to the ``grant()``
 method.
 
-.. code:: php
+.. code-block:: php
 
     $aceManager->grant($object, MaskBuilder::MASK_OWNER, $user);
 
@@ -74,7 +79,7 @@ Granting rights to only a property of an object or class can also be
 done with the same method. The only difference is to supply the fourth
 parameter ``$field``.
 
-.. code:: php
+.. code-block:: php
 
     $aceManager->grant($object, MaskBuilder::MASK_OWNER, $user, 'myProperty');
 
@@ -87,7 +92,7 @@ Object
 Removing previously granted rights can be done by calling the
 ``revoke()`` method.
 
-.. code:: php
+.. code-block:: php
 
     $aceManager->revoke($object, MaskBuilder::MASK_OWNER, $user);
 
@@ -97,7 +102,7 @@ This example removes ``$user`` as owner of exactly this instance
 If you want to remove all granted rights on the object for one user,
 there is a special method ``revokeAllForIdentity()``.
 
-.. code:: php
+.. code-block:: php
 
     $aceManager->revokeAllForIdentity($object, $user);
 
@@ -116,7 +121,7 @@ If you want to revoke the granted rights for a field, you just need to
 supply the 4th (``revoke()``) or 3rd (``revokeAllForIdentity``)
 argument, which specifies the name of the field.
 
-.. code:: php
+.. code-block:: php
 
     $aceManager->revoke($object, MaskBuilder::MASK_OWNER, $user, 'myfield');
     $aceManager->revokeAllForIdentity($object, $user, 'field');
@@ -129,9 +134,6 @@ all entries from the storage. This function is probably very useful when
 you are going to remove the ``$object`` and want to cleanup all it's ACL
 entries.
 
-.. code:: php
+.. code-block:: php
 
     $aceManager->deleteAcl($object);
-
-Preloading
-~~~~~~~~~~
