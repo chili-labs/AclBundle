@@ -52,10 +52,10 @@ Enable the bundle in the kernel of your application:
 .. note::
 
     After enabling the Bundle in your kernel you will not notice any
-    difference, as using the ``AclManager`` is optional and the
+    difference, as using the provided services is optional and the
     eventlistener for doctrine is not enabled by default.
 
-This is already everything you need to do to get started with the
+This was already everything you need to do to get started with the
 AclBundle.
 
 Guides
