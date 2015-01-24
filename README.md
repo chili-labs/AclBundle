@@ -44,18 +44,7 @@ $aclManager->manageObjectAces()
 
 ## Documentation
 
-The documentation is part of the bundle and can be found in Resources/doc.
-
-1. [Installation](Resources/doc/installation.md)
-2. [Working with the ACL Manager](Resources/doc/working_with_the_acl_manager.md)
-    1. [Retrieving the ACL und ACE Managers](Resources/doc/working_with_the_acl_manager.md#retrieving-the-acl-und-ace-managers)
-    2. [Granting](Resources/doc/working_with_the_acl_manager.md#granting)
-    3. [Revoking](Resources/doc/working_with_the_acl_manager.md#revoking)
-    4. [Deleting ACLs](Resources/doc/working_with_the_acl_manager.md#deleting-acls)
-    5. [Preloading](Resources/doc/working_with_the_acl_manager.md#preloading)
-4. [Doctrine ACL cleanup eventlistener](Resources/doc/doctrine_acl_cleanup_eventlistener.md)
-5. [Reference Guide](Resources/doc/reference_guide.md)
-    1. [Configuration](Resources/doc/reference_guide.md#configuration)
+The latest documentation can be found on [aclbundle.chililabs.org](http://aclbundle.chililabs.org/en/latest/).
 
 ## Tests
 
