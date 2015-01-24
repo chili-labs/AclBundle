@@ -30,7 +30,7 @@ Just run the following command to get the latest version:
 
 .. code-block:: bash
 
-    $ composer require behat/mink
+    $ composer require project-a/acl-bundle
 
 2. Enable the bundle
 ~~~~~~~~~~~~~~~~~~~~
