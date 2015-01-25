@@ -13,6 +13,7 @@ namespace ProjectA\Bundle\AclBundle\Tests\Security\Acl\Manager\AceManager;
 
 use ProjectA\Bundle\AclBundle\Tests\Model\AbstractSecurityTest;
 use ProjectA\Bundle\AclBundle\Tests\Model\User;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Role\Role;
@@ -51,6 +52,19 @@ class AbstractAceManagerTest extends AbstractSecurityTest
         $this->assertTrue($this->manager->isGranted('EDIT', $this->object));
     }
 
+    public function testGrantSingleMaskForSecurityIdentity()
+    {
+        $user = new User();
+        $token = new UsernamePasswordToken($user, $user->getPassword(), 'test', $user->getRoles());
+        $this->container->get('security.context')->setToken($token);
+        $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+        $this->objectmanager->grant($this->object, MaskBuilder::MASK_EDIT, $securityIdentity);
+
+        $this->assertTrue($this->manager->isGranted('VIEW', $this->object));
+        $this->assertTrue($this->manager->isGranted('EDIT', $this->object));
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -77,9 +91,21 @@ class AbstractAceManagerTest extends AbstractSecurityTest
         $this->assertTrue(true);
     }
 
-    public function testPreloadDoesNotThrowException()
+    /**
+     * @expectedException \Symfony\Component\Security\Acl\Exception\AclNotFoundException
+     */
+    public function testPreloadThrowsException()
     {
         $this->objectmanager->preload(array($this->object));
+    }
+
+    public function testPreloadDoesNotThrowException()
+    {
+        $role = new Role('ROLE_USER');
+        $this->objectmanager
+            ->grant($this->object, MaskBuilder::MASK_EDIT, $role)
+            ->preload(array($this->object));
+
         $this->assertTrue(true);
     }
 }
