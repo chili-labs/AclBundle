@@ -1,5 +1,5 @@
-Doctrine ACL Cleanup EventListener
-==================================
+Doctrine Cleanup Listener
+=========================
 
 .. todo::
 

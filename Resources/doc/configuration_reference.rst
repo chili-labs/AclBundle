@@ -1,7 +1,7 @@
 Configuration Reference
 =======================
 
-This are all available configuration options for this bundle with their default values.
+These are all available configuration options for this bundle with their default values.
 
 .. code-block:: yaml
 

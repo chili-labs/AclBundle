@@ -13,7 +13,7 @@ packages:
 
 .. note::
 
-    It might also work with earlier versions, but was not tested with
+    It might also work with earlier versions of this packages, but was not tested with
     them. If you get it working with earlier versions, feel free to open
     a pull request.
 
@@ -66,8 +66,9 @@ Learn more about how to use this bundle.
 .. toctree::
     :maxdepth: 2
 
+    retrieving_service_classes
     basic_usage
-    doctrine_acl_cleanup_eventlistener
+    doctrine_cleanup_listener
     configuration_reference
 
 .. _Composer: https://getcomposer.org
