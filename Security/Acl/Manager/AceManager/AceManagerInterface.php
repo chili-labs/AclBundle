@@ -82,6 +82,8 @@ interface AceManagerInterface
     /**
      * Preload Acls for all the objects
      *
+     * This will create batch queries instead of single queries for the acls
+     *
      * @param object[] $objects
      *
      * @return self
