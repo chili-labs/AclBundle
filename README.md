@@ -1,11 +1,11 @@
 # ChiliLabs AclBundle
 ###### Bundle for Symfony2 providing easy access to the complex ACL subsystem
 
-[![Latest Stable Version](https://poser.pugx.org/project-a/acl-bundle/v/stable.png)](https://packagist.org/packages/project-a/acl-bundle)
-[![Latest Unstable Version](https://poser.pugx.org/project-a/acl-bundle/v/unstable.png)](https://packagist.org/packages/project-a/acl-bundle)
-[![Total Downloads](https://poser.pugx.org/project-a/acl-bundle/downloads.png)](https://packagist.org/packages/project-a/acl-bundle)
+[![Latest Stable Version](https://img.shields.io/packagist/v/project-a/acl-bundle.svg?style=flat)](https://packagist.org/packages/project-a/acl-bundle)
+[![Total Downloads](https://img.shields.io/packagist/dt/project-a/acl-bundle.svg?style=flat)](https://packagist.org/packages/project-a/acl-bundle)
+[![License](https://img.shields.io/packagist/l/project-a/acl-bundle.svg?style=flat)](https://packagist.org/packages/project-a/acl-bundle)
 [![Build Status](https://secure.travis-ci.org/chili-labs/AclBundle.png?branch=master)](http://travis-ci.org/chili-labs/AclBundle)
-[![Coverage Status](https://coveralls.io/repos/chili-labs/AclBundle/badge.png?branch=master)](https://coveralls.io/r/chili-labs/AclBundle?branch=master)
+[![Coverage Status](https://img.shields.io/coveralls/chili-labs/AclBundle.svg?style=flat)](https://coveralls.io/r/chili-labs/AclBundle?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/c73329cc-4028-463d-9228-afcfc3ebffbe/mini.png)](https://insight.sensiolabs.com/projects/c73329cc-4028-463d-9228-afcfc3ebffbe)
 
 ## Description
