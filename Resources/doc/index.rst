@@ -13,7 +13,7 @@ packages:
 
 .. note::
 
-    It might also work with earlier versions of this packages, but was not tested with
+    It might also work with earlier versions of these packages, but was not tested with
     them. If you get it working with earlier versions, feel free to open
     a pull request.
 
