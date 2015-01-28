@@ -1,7 +1,7 @@
 # ChiliLabs AclBundle
 ###### Bundle for Symfony2 providing easy access to the complex ACL subsystem
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/project-a/acl-bundle.svg?style=flat)](https://packagist.org/packages/project-a/acl-bundle)
+[![Latest Stable Version](https://img.shields.io/packagist/v/project-a/acl-bundle.svg?style=flat&label=stable)](https://packagist.org/packages/project-a/acl-bundle)
 [![Total Downloads](https://img.shields.io/packagist/dt/project-a/acl-bundle.svg?style=flat)](https://packagist.org/packages/project-a/acl-bundle)
 [![License](https://img.shields.io/packagist/l/project-a/acl-bundle.svg?style=flat)](https://packagist.org/packages/project-a/acl-bundle)
 [![Build Status](https://secure.travis-ci.org/chili-labs/AclBundle.png?branch=master)](http://travis-ci.org/chili-labs/AclBundle)
