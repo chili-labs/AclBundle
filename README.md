@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/packagist/l/project-a/acl-bundle.svg?style=flat)](https://packagist.org/packages/project-a/acl-bundle)
 [![Build Status](https://secure.travis-ci.org/chili-labs/AclBundle.png?branch=master)](http://travis-ci.org/chili-labs/AclBundle)
 [![Coverage Status](https://img.shields.io/coveralls/chili-labs/AclBundle.svg?style=flat)](https://coveralls.io/r/chili-labs/AclBundle?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/c73329cc-4028-463d-9228-afcfc3ebffbe/mini.png)](https://insight.sensiolabs.com/projects/c73329cc-4028-463d-9228-afcfc3ebffbe)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/9d18ede0-4c9a-427a-8a4a-3841ab04d52d/mini.png)](https://insight.sensiolabs.com/projects/9d18ede0-4c9a-427a-8a4a-3841ab04d52d)
 
 ## Description
 
