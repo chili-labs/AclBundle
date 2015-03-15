@@ -14,6 +14,7 @@ namespace ProjectA\Bundle\AclBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -36,6 +37,14 @@ class ProjectAAclExtension extends Extension
                 strtoupper($config['default_strategy'])
             )
         );
+
+        // Compatibility for symfony <2.6
+        if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
+            $authorizationChecker = new Reference('security.authorization_checker');
+        } else {
+            $authorizationChecker = new Reference('security.context');
+        }
+        $container->getDefinition('projecta_acl.manager')->replaceArgument(0, $authorizationChecker);
 
         $container->setParameter('projecta_acl.remove_orphans', $config['remove_orphans']);
         $container->setParameter('projecta_acl.default_strategy', $strategy);

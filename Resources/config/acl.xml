@@ -12,7 +12,7 @@
 
     <services>
         <service id="projecta_acl.manager" class="%projecta_acl.manager.class%">
-            <argument type="service" id="security.context" />
+            <argument/>
             <argument type="service" id="projecta_acl.ace.classmanager" />
             <argument type="service" id="projecta_acl.ace.objectmanager" />
         </service>

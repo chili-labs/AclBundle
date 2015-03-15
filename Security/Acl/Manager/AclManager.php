@@ -14,6 +14,8 @@ namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager;
 use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ClassAceManager;
 use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager;
 use Symfony\Component\Security\Acl\Voter\FieldVote;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
@@ -22,9 +24,9 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class AclManager
 {
     /**
-     * @var SecurityContextInterface
+     * @var SecurityContextInterface|AuthorizationCheckerInterface
      */
-    private $context;
+    private $authorizationChecker;
 
     /**
      * @var ClassAceManager
@@ -37,13 +39,16 @@ class AclManager
     private $objectAceManager;
 
     /**
-     * @param SecurityContextInterface $context
-     * @param ClassAceManager          $classAceManager
-     * @param ObjectAceManager         $objectAceManager
+     * @param ClassAceManager                               $classAceManager
+     * @param ObjectAceManager                              $objectAceManager
+     * @param SecurityContextInterface|AuthorizationChecker $authorizationChecker
      */
-    public function __construct(SecurityContextInterface $context, ClassAceManager $classAceManager, ObjectAceManager $objectAceManager)
-    {
-        $this->context = $context;
+    public function __construct(
+        /* AuthorizationCheckerInterface */ $authorizationChecker,
+        ClassAceManager $classAceManager,
+        ObjectAceManager $objectAceManager
+    ) {
+        $this->authorizationChecker = $authorizationChecker;
         $this->classAceManager = $classAceManager;
         $this->objectAceManager = $objectAceManager;
     }
@@ -79,6 +84,6 @@ class AclManager
             $object = new FieldVote($object, $field);
         }
 
-        return $this->context->isGranted($attributes, $object);
+        return $this->authorizationChecker->isGranted($attributes, $object);
     }
 }
