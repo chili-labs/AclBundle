@@ -1,7 +1,6 @@
 sudo: false
 cache:
     directories:
-        - vendor
         - $HOME/.composer/cache
 language: php
 php:
@@ -16,7 +15,7 @@ before_install:
     - sh -c "if [ '$SYMFONY_DEPS_VERSION' = '' ]; then composer require symfony/symfony:2.6.*@dev --no-update; fi"
     -
 install:
-    - composer install --prefer-source
+    - composer install
 script:
     - phpunit --coverage-clover build/logs/clover.xml
 after_script:
