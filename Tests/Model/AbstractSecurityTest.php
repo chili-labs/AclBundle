@@ -69,7 +69,11 @@ abstract class AbstractSecurityTest extends WebTestCase
         $this->container = $this->client->getContainer();
 
         $this->token = $this->createToken();
-        $this->container->get('security.context')->setToken($this->token);
+        if ($this->container->has('security.token_storage')) {
+            $this->container->get('security.token_storage')->setToken($this->token);
+        } else {
+            $this->container->get('security.context')->setToken($this->token);
+        }
 
         $this->connection = $this->container->get('database_connection');
 
