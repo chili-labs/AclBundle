@@ -24,7 +24,7 @@ after_script:
 matrix:
     include:
         - php: 5.6
-          env: SYMFONY_DEPS_VERSION=2.4
+          env: SYMFONY_DEPS_VERSION=2.3
         - php: 5.6
           env: SYMFONY_DEPS_VERSION=2.5
         - php: 5.6
