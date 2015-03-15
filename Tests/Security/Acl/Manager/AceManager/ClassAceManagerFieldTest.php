@@ -126,7 +126,7 @@ class ClassAceManagerFieldTest extends AbstractSecurityTest
 
         $this->assertTrue($this->manager->isGranted('VIEW', $this->object, 'foo'));
 
-        $this->container->get('security.context')->setToken($token2, 'foo');
+        $this->setToken($token2);
 
         $this->assertFalse($this->manager->isGranted('VIEW', $this->object, 'foo'));
     }
@@ -186,7 +186,7 @@ class ClassAceManagerFieldTest extends AbstractSecurityTest
 
         $this->assertFalse($this->manager->isGranted('VIEW', $this->object, 'foo'));
 
-        $this->container->get('security.context')->setToken($token2);
+        $this->setToken($token2);
 
         $this->assertFalse($this->manager->isGranted('VIEW', $this->object, 'foo'));
     }

@@ -69,11 +69,7 @@ abstract class AbstractSecurityTest extends WebTestCase
         $this->container = $this->client->getContainer();
 
         $this->token = $this->createToken();
-        if ($this->container->has('security.token_storage')) {
-            $this->container->get('security.token_storage')->setToken($this->token);
-        } else {
-            $this->container->get('security.context')->setToken($this->token);
-        }
+        $this->setToken($this->token);
 
         $this->connection = $this->container->get('database_connection');
 
@@ -96,6 +92,19 @@ abstract class AbstractSecurityTest extends WebTestCase
         $this->classmanager = $this->manager->manageClassAces();
 
         $this->object = new SomeObject(1);
+    }
+
+    /**
+     * Helper function for compatibility to symfony <2.6
+     * @param $token
+     */
+    protected function setToken($token)
+    {
+        if ($this->container->has('security.token_storage')) {
+            $this->container->get('security.token_storage')->setToken($token);
+        } else {
+            $this->container->get('security.context')->setToken($token);
+        }
     }
 
     /**

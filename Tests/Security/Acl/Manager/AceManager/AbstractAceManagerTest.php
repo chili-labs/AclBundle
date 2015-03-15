@@ -27,7 +27,7 @@ class AbstractAceManagerTest extends AbstractSecurityTest
     {
         $user = new User();
         $token = new UsernamePasswordToken($user, $user->getPassword(), 'test', $user->getRoles());
-        $this->container->get('security.context')->setToken($token);
+        $this->setToken($token);
 
         $this->objectmanager->grant($this->object, MaskBuilder::MASK_EDIT, $user);
 
@@ -56,7 +56,7 @@ class AbstractAceManagerTest extends AbstractSecurityTest
     {
         $user = new User();
         $token = new UsernamePasswordToken($user, $user->getPassword(), 'test', $user->getRoles());
-        $this->container->get('security.context')->setToken($token);
+        $this->setToken($token);
         $securityIdentity = UserSecurityIdentity::fromAccount($user);
 
         $this->objectmanager->grant($this->object, MaskBuilder::MASK_EDIT, $securityIdentity);

@@ -42,11 +42,4 @@ class ProjectAAclExtensionTest extends AbstractSecurityTest
         $this->assertNotNull($this->client);
         $this->assertNotNull($this->container);
     }
-
-    public function testIfSecurityContextLoads()
-    {
-        $aclProvider = $this->container->get('security.context');
-        $this->assertTrue($aclProvider->isGranted('ROLE_USER'));
-        $this->assertFalse($aclProvider->isGranted('ROLE_ADMIN'));
-    }
 }

@@ -29,7 +29,7 @@ class AclManagerTest extends AbstractSecurityTest
         $this->assertFalse($this->manager->isGranted('ROLE_ADMIN'));
 
         $adminToken = $this->createToken(array('ROLE_ADMIN'));
-        $this->container->get('security.context')->setToken($adminToken);
+        $this->setToken($adminToken);
 
         $this->assertTrue($this->manager->isGranted('ROLE_USER'));
         $this->assertTrue($this->manager->isGranted('ROLE_ADMIN'));
