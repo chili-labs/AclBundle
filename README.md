@@ -23,8 +23,8 @@ $objectIdentity = ObjectIdentity::fromDomainObject($domainObject);
 $acl = $aclProvider->createAcl($objectIdentity);
 
 // retrieving the security identity of the currently logged-in user
-$securityContext = $container->get('security.context');
-$user = $securityContext->getToken()->getUser();
+$tokenStorage = $container->get('security.token_storage');
+$user = $tokenStorage->getToken()->getUser();
 $securityIdentity = UserSecurityIdentity::fromAccount($user);
 
 // grant owner access
@@ -34,8 +34,8 @@ $aclProvider->updateAcl($acl);
 With this bundle you can simplify it to:
 
 ```php
-$securityContext = $container->get('security.context');
-$user = $securityContext->getToken()->getUser();
+$tokenStorage = $container->get('security.token_storage');
+$user = $tokenStorage->getToken()->getUser();
 
 $aclManager = $container->get('projecta_acl.manager');
 $aclManager->manageObjectAces()
