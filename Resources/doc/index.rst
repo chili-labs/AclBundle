@@ -70,5 +70,6 @@ Learn more about how to use this bundle.
     basic_usage
     doctrine_cleanup_listener
     configuration_reference
+    changelog
 
 .. _Composer: https://getcomposer.org
