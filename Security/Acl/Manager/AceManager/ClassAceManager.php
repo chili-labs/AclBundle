@@ -14,6 +14,8 @@ namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager;
 use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
+use Doctrine\Common\Util\ClassUtils;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 
 /**
  * @author Daniel Tschinder <daniel@tschinder.de>
@@ -29,16 +31,28 @@ class ClassAceManager extends AbstractAceManager
     }
 
     /**
+     * @param object $object
+     *
+     * @return MutableAclInterface
+     */
+    protected function findOrCreateAcl($object)
+    {
+        $oid = $this->ensureObjectIdentity($object);
+
+        return parent::findOrCreateAcl($oid);
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function insertAce(
-        MutableAclInterface $acl,
-        SecurityIdentityInterface $sid,
-        $mask,
-        $field = null,
-        $index = 0,
-        $granting = true,
-        $strategy = null
+      MutableAclInterface $acl,
+      SecurityIdentityInterface $sid,
+      $mask,
+      $field = null,
+      $index = 0,
+      $granting = true,
+      $strategy = null
     ) {
         if ($field) {
             $acl->insertClassFieldAce($field, $sid, $mask, $index, $granting, $strategy ?: $this->defaultStrategy);

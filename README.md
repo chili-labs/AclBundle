@@ -41,6 +41,17 @@ $aclManager = $container->get('projecta_acl.manager');
 $aclManager->manageObjectAces()
     ->grant($domainObject, MaskBuilder::MASK_OWNER, $user);
 ```
+Granting permission to a class is typically done by supplying an instance of a document of that class.
+This requires you have an instance already, so we made it also possible to supply an ObjectIdentity of type 'class'
+
+```php
+...
+$oid    =   new ObjectIdentity( 'class' , 'Acme\\SomeBundle\\Document\\Comment');
+
+$aclManager->manageClassAces()
+  ->grant($oid, MaskBuilder::MASK_CREATE, $user);
+```
+This creates an ObjectIdentity in the MongoDB with Identifier 'class' and the type will 'Acme\\SomeBundle\\Document\\Comment'
 
 ## Documentation
 
