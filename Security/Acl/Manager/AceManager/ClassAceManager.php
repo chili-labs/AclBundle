@@ -14,8 +14,6 @@ namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager;
 use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
-use Doctrine\Common\Util\ClassUtils;
-use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 
 /**
  * @author Daniel Tschinder <daniel@tschinder.de>
