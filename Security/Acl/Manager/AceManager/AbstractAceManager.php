@@ -25,7 +25,6 @@ use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\Common\Util\ClassUtils;
 
 /**
  * @author Daniel Tschinder <daniel@tschinder.de>
@@ -295,7 +294,7 @@ abstract class AbstractAceManager implements AceManagerInterface
         if($object instanceof ObjectIdentity) {
             $oid = $object;
         } else {
-            $oid = new ObjectIdentity( 'class' , ClassUtils::getRealClass( get_class( $object ) ) );
+            $oid = $this->createObjectIdentity($object);
         }
         return $oid;
     }
