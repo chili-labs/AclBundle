@@ -27,6 +27,14 @@ class ClassAceManagerTest extends AbstractSecurityTest
         $this->assertTrue($this->manager->isGranted('EDIT', $this->object));
     }
 
+    public function testGrantCreateMask()
+    {
+        $this->classmanager->grant($this->object, MaskBuilder::MASK_CREATE, $this->token);
+
+        $this->assertTrue($this->manager->isGranted('CREATE', $this->object));
+        $this->assertFalse($this->manager->isGranted('EDIT', $this->object));
+    }
+
     public function testGrantMultipleMask()
     {
         $maskBuilder = new MaskBuilder();

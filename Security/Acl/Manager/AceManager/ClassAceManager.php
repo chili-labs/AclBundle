@@ -29,16 +29,28 @@ class ClassAceManager extends AbstractAceManager
     }
 
     /**
+     * @param object $object
+     *
+     * @return MutableAclInterface
+     */
+    protected function findOrCreateAcl($object)
+    {
+        $oid = $this->ensureObjectIdentity($object);
+
+        return parent::findOrCreateAcl($oid);
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function insertAce(
-        MutableAclInterface $acl,
-        SecurityIdentityInterface $sid,
-        $mask,
-        $field = null,
-        $index = 0,
-        $granting = true,
-        $strategy = null
+      MutableAclInterface $acl,
+      SecurityIdentityInterface $sid,
+      $mask,
+      $field = null,
+      $index = 0,
+      $granting = true,
+      $strategy = null
     ) {
         if ($field) {
             $acl->insertClassFieldAce($field, $sid, $mask, $index, $granting, $strategy ?: $this->defaultStrategy);

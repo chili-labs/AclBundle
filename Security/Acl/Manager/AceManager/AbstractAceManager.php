@@ -11,6 +11,7 @@
 
 namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager;
 
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
 use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
@@ -33,7 +34,7 @@ abstract class AbstractAceManager implements AceManagerInterface
     /**
      * @var MutableAclProviderInterface
      */
-    private $provider;
+    protected $provider;
 
     /**
      * @var ObjectIdentityRetrievalStrategyInterface
@@ -51,9 +52,9 @@ abstract class AbstractAceManager implements AceManagerInterface
      * @param string                                   $defaultStrategy
      */
     public function __construct(
-        MutableAclProviderInterface $provider,
-        ObjectIdentityRetrievalStrategyInterface $objectIdentityStrategy,
-        $defaultStrategy
+      MutableAclProviderInterface $provider,
+      ObjectIdentityRetrievalStrategyInterface $objectIdentityStrategy,
+      $defaultStrategy
     ) {
         $this->provider = $provider;
         $this->objectIdentityStrategy = $objectIdentityStrategy;
@@ -209,7 +210,7 @@ abstract class AbstractAceManager implements AceManagerInterface
      */
     protected function findAcl($object)
     {
-        $identity = $this->createObjectIdentity($object);
+        $identity = $this->ensureObjectIdentity($object);
 
         try {
             $acl = $this->provider->findAcl($identity);
@@ -230,7 +231,7 @@ abstract class AbstractAceManager implements AceManagerInterface
     {
         $acl = $this->findAcl($object);
         if (null === $acl) {
-            $identity = $this->createObjectIdentity($object);
+            $identity = $this->ensureObjectIdentity($object);
             $acl = $this->provider->createAcl($identity);
             $this->checkAclType($acl);
         }
@@ -275,10 +276,26 @@ abstract class AbstractAceManager implements AceManagerInterface
      *
      * @throws \LogicException if the provider is not creating mutable acl classes
      */
-    private function checkAclType(AclInterface $acl)
+    protected function checkAclType(AclInterface $acl)
     {
         if (!$acl instanceof MutableAclInterface) {
             throw new \LogicException('The acl provider needs to create acls of type MutableAclInterface');
         }
+    }
+
+    /**
+     * turn object into an ObjectIdentity if it is not already
+     *
+     * @param $object
+     *
+     * @return ObjectIdentity
+     */
+    protected function ensureObjectIdentity($object) {
+        if($object instanceof ObjectIdentity) {
+            $oid = $object;
+        } else {
+            $oid = $this->createObjectIdentity($object);
+        }
+        return $oid;
     }
 }
