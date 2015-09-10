@@ -8,6 +8,7 @@
         <parameter key="projecta_acl.manager.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\AclManager</parameter>
         <parameter key="projecta_acl.ace.classmanager.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ClassAceManager</parameter>
         <parameter key="projecta_acl.ace.objectmanager.class">ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager</parameter>
+        <parameter key="projecta_acl.acl.object_identity_retrieval_strategy.class">ProjectA\Bundle\AclBundle\Security\Acl\Domain\ObjectIdentityRetrievalStrategy</parameter>
     </parameters>
 
     <services>
@@ -15,18 +16,33 @@
             <argument/>
             <argument type="service" id="projecta_acl.ace.classmanager" />
             <argument type="service" id="projecta_acl.ace.objectmanager" />
+            <argument type="service" id="projecta_acl.acl_repository" />
         </service>
 
         <service id="projecta_acl.ace.classmanager" class="%projecta_acl.ace.classmanager.class%">
             <argument type="service" id="security.acl.provider" />
-            <argument type="service" id="security.acl.object_identity_retrieval_strategy" />
+            <argument type="service" id="projecta_acl.object_identity_retrieval_strategy" />
+            <argument type="service" id="projecta_acl.acl_repository" />
+            <argument type="service" id="projecta_acl.security_identity_factory" />
             <argument>%projecta_acl.default_strategy%</argument>
         </service>
 
         <service id="projecta_acl.ace.objectmanager" class="%projecta_acl.ace.objectmanager.class%">
             <argument type="service" id="security.acl.provider" />
-            <argument type="service" id="security.acl.object_identity_retrieval_strategy" />
+            <argument type="service" id="projecta_acl.object_identity_retrieval_strategy" />
+            <argument type="service" id="projecta_acl.acl_repository" />
+            <argument type="service" id="projecta_acl.security_identity_factory" />
             <argument>%projecta_acl.default_strategy%</argument>
+        </service>
+
+        <!-- internals -->
+        <service id="projecta_acl.object_identity_retrieval_strategy" class="%projecta_acl.acl.object_identity_retrieval_strategy.class%" public="false" />
+
+        <service id="projecta_acl.security_identity_factory" class="ProjectA\Bundle\AclBundle\Security\Acl\SecurityIdentityFactory" public="false" />
+
+        <service id="projecta_acl.acl_repository" class="ProjectA\Bundle\AclBundle\Security\Acl\AclRepository" public="false">
+            <argument type="service" id="security.acl.provider" />
+            <argument type="service" id="projecta_acl.object_identity_retrieval_strategy" />
         </service>
 
         <!-- caching -->

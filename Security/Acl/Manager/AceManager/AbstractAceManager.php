@@ -11,19 +11,14 @@
 
 namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager;
 
-use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
-use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
-use Symfony\Component\Security\Acl\Exception\AclNotFoundException;
+use ProjectA\Bundle\AclBundle\Security\Acl\AclRepository;
+use ProjectA\Bundle\AclBundle\Security\Acl\SecurityIdentityFactory;
 use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\EntryInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclProviderInterface;
-use Symfony\Component\Security\Acl\Model\ObjectIdentityInterface;
 use Symfony\Component\Security\Acl\Model\ObjectIdentityRetrievalStrategyInterface;
 use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Role\RoleInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @author Daniel Tschinder <daniel@tschinder.de>
@@ -31,33 +26,49 @@ use Symfony\Component\Security\Core\User\UserInterface;
 abstract class AbstractAceManager implements AceManagerInterface
 {
     /**
-     * @var MutableAclProviderInterface
-     */
-    private $provider;
-
-    /**
-     * @var ObjectIdentityRetrievalStrategyInterface
-     */
-    private $objectIdentityStrategy;
-
-    /**
      * @var string
      */
     protected $defaultStrategy;
 
     /**
+     * @var AclRepository
+     */
+    private $aclRepository;
+
+    /**
+     * @var ObjectIdentityRetrievalStrategyInterface
+     */
+    private $objectIdentityRetrievalStrategy;
+
+    /**
+     * @var MutableAclProviderInterface
+     */
+    private $provider;
+
+    /**
+     * @var SecurityIdentityFactory
+     */
+    private $securityIdentityFactory;
+
+    /**
      * @param MutableAclProviderInterface              $provider
-     * @param ObjectIdentityRetrievalStrategyInterface $objectIdentityStrategy
+     * @param ObjectIdentityRetrievalStrategyInterface $objectIdentityRetrievalStrategy
+     * @param AclRepository                            $aclRepository
+     * @param SecurityIdentityFactory                  $securityIdentityFactory
      * @param string                                   $defaultStrategy
      */
     public function __construct(
         MutableAclProviderInterface $provider,
-        ObjectIdentityRetrievalStrategyInterface $objectIdentityStrategy,
+        ObjectIdentityRetrievalStrategyInterface $objectIdentityRetrievalStrategy,
+        AclRepository $aclRepository,
+        SecurityIdentityFactory $securityIdentityFactory,
         $defaultStrategy
     ) {
         $this->provider = $provider;
-        $this->objectIdentityStrategy = $objectIdentityStrategy;
+        $this->objectIdentityRetrievalStrategy = $objectIdentityRetrievalStrategy;
         $this->defaultStrategy = $defaultStrategy;
+        $this->aclRepository = $aclRepository;
+        $this->securityIdentityFactory = $securityIdentityFactory;
     }
 
     /**
@@ -65,8 +76,10 @@ abstract class AbstractAceManager implements AceManagerInterface
      */
     public function grant($object, $mask, $identity, $field = null, $strategy = null)
     {
-        $sid = $this->createSecurityIdentity($identity);
-        $acl = $this->findOrCreateAcl($object);
+        $this->validateObject($object);
+
+        $sid = $this->securityIdentityFactory->createSecurityIdentity($identity);
+        $acl = $this->aclRepository->findOrCreateAcl($object);
 
         $this->insertAce($acl, $sid, $mask, $field, 0, true, $strategy ?: $this->defaultStrategy);
         $this->provider->updateAcl($acl);
@@ -79,11 +92,13 @@ abstract class AbstractAceManager implements AceManagerInterface
      */
     public function revoke($object, $mask, $identity, $field = null)
     {
-        if (null === ($acl = $this->findAcl($object))) {
+        $this->validateObject($object);
+
+        if (null === ($acl = $this->aclRepository->findAcl($object))) {
             return $this;
         }
 
-        $sid = $this->createSecurityIdentity($identity);
+        $sid = $this->securityIdentityFactory->createSecurityIdentity($identity);
         $aces = $this->getAces($acl, $field);
 
         /* @var EntryInterface $ace */
@@ -102,11 +117,13 @@ abstract class AbstractAceManager implements AceManagerInterface
      */
     public function revokeAllForIdentity($object, $identity, $field = null)
     {
-        if (null === ($acl = $this->findAcl($object))) {
+        $this->validateObject($object);
+
+        if (null === ($acl = $this->aclRepository->findAcl($object))) {
             return $this;
         }
 
-        $sid = $this->createSecurityIdentity($identity);
+        $sid = $this->securityIdentityFactory->createSecurityIdentity($identity);
         $aces = $this->getAces($acl, $field);
         $aces = array_reverse($aces, true);
 
@@ -126,7 +143,9 @@ abstract class AbstractAceManager implements AceManagerInterface
      */
     public function revokeAll($object, $field = null)
     {
-        if (null === ($acl = $this->findAcl($object))) {
+        $this->validateObject($object);
+
+        if (null === ($acl = $this->aclRepository->findAcl($object))) {
             return $this;
         }
 
@@ -147,7 +166,7 @@ abstract class AbstractAceManager implements AceManagerInterface
      */
     public function deleteAcl($object)
     {
-        $oid = $this->createObjectIdentity($object);
+        $oid = $this->objectIdentityRetrievalStrategy->getObjectIdentity($object);
         $this->provider->deleteAcl($oid);
 
         return $this;
@@ -160,7 +179,7 @@ abstract class AbstractAceManager implements AceManagerInterface
     {
         $oids = array();
         foreach ($objects as $object) {
-            $oids[] = $this->createObjectIdentity($object);
+            $oids[] = $this->objectIdentityRetrievalStrategy->getObjectIdentity($object);
         }
         $this->provider->findAcls($oids);
 
@@ -184,7 +203,15 @@ abstract class AbstractAceManager implements AceManagerInterface
      * @param bool                      $granting
      * @param string                    $strategy
      */
-    abstract protected function insertAce(MutableAclInterface $acl, SecurityIdentityInterface $sid, $mask, $field = null, $index = 0, $granting = true, $strategy = null);
+    abstract protected function insertAce(
+        MutableAclInterface $acl,
+        SecurityIdentityInterface $sid,
+        $mask,
+        $field = null,
+        $index = 0,
+        $granting = true,
+        $strategy = null
+    );
 
     /**
      * @param MutableAclInterface $acl
@@ -204,81 +231,6 @@ abstract class AbstractAceManager implements AceManagerInterface
 
     /**
      * @param object $object
-     *
-     * @return MutableAclInterface
      */
-    protected function findAcl($object)
-    {
-        $identity = $this->createObjectIdentity($object);
-
-        try {
-            $acl = $this->provider->findAcl($identity);
-            $this->checkAclType($acl);
-        } catch (AclNotFoundException $e) {
-            $acl = null;
-        }
-
-        return $acl;
-    }
-
-    /**
-     * @param object $object
-     *
-     * @return MutableAclInterface
-     */
-    protected function findOrCreateAcl($object)
-    {
-        $acl = $this->findAcl($object);
-        if (null === $acl) {
-            $identity = $this->createObjectIdentity($object);
-            $acl = $this->provider->createAcl($identity);
-            $this->checkAclType($acl);
-        }
-
-        return $acl;
-    }
-
-    /**
-     * @param string|TokenInterface|RoleInterface|UserInterface|SecurityIdentityInterface $identity
-     *
-     * @return RoleSecurityIdentity|UserSecurityIdentity
-     *
-     * @throws \InvalidArgumentException
-     */
-    protected function createSecurityIdentity($identity)
-    {
-        if ($identity instanceof UserInterface) {
-            return UserSecurityIdentity::fromAccount($identity);
-        } elseif ($identity instanceof TokenInterface) {
-            return UserSecurityIdentity::fromToken($identity);
-        } elseif ($identity instanceof RoleInterface || is_string($identity)) {
-            return new RoleSecurityIdentity($identity);
-        } elseif ($identity instanceof SecurityIdentityInterface) {
-            return $identity;
-        }
-
-        throw new \InvalidArgumentException('Could not create a valid SecurityIdentity with the provided identity information');
-    }
-
-    /**
-     * @param object $object
-     *
-     * @return ObjectIdentityInterface
-     */
-    protected function createObjectIdentity($object)
-    {
-        return $this->objectIdentityStrategy->getObjectIdentity($object);
-    }
-
-    /**
-     * @param AclInterface $acl
-     *
-     * @throws \LogicException if the provider is not creating mutable acl classes
-     */
-    private function checkAclType(AclInterface $acl)
-    {
-        if (!$acl instanceof MutableAclInterface) {
-            throw new \LogicException('The acl provider needs to create acls of type MutableAclInterface');
-        }
-    }
+    abstract protected function validateObject($object);
 }
