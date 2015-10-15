@@ -9,6 +9,14 @@ Basic Usage
     .. code-block:: php
 
         $aceManager->grant(...)->grant(...)->revoke(...);
+        
+.. note::
+    The ClassAceManager also accepts the classname as parameter, in case
+    you don't have an instance of the class.
+
+    .. code-block:: php
+
+        $aceManager->grant(MyObject::class, ...);
 
 Granting permissions
 --------------------
