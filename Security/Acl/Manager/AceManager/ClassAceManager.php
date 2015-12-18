@@ -11,6 +11,7 @@
 
 namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager;
 
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Model\AclInterface;
 use Symfony\Component\Security\Acl\Model\MutableAclInterface;
 use Symfony\Component\Security\Acl\Model\SecurityIdentityInterface;
@@ -68,6 +69,18 @@ class ClassAceManager extends AbstractAceManager
             $acl->deleteClassFieldAce($index, $field);
         } else {
             $acl->deleteClassAce($index);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function validateObject($object)
+    {
+        if (!is_string($object) && !$object instanceof ObjectIdentity && !is_object($object)) {
+            throw new \InvalidArgumentException(
+                'Object needs to be spcified as string, \Symfony\Component\Security\Acl\Domain\ObjectIdentity or domain object'
+            );
         }
     }
 }

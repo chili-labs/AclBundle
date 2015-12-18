@@ -11,6 +11,7 @@
 
 namespace ProjectA\Bundle\AclBundle\Security\Acl\Manager;
 
+use ProjectA\Bundle\AclBundle\Security\Acl\AclRepository;
 use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ClassAceManager;
 use ProjectA\Bundle\AclBundle\Security\Acl\Manager\AceManager\ObjectAceManager;
 use Symfony\Component\Security\Acl\Voter\FieldVote;
@@ -39,22 +40,33 @@ class AclManager
     private $objectAceManager;
 
     /**
+     * @var AclRepository
+     */
+    private $aclRepository;
+
+    /**
+     * @param SecurityContextInterface|AuthorizationChecker $authorizationChecker
      * @param ClassAceManager                               $classAceManager
      * @param ObjectAceManager                              $objectAceManager
-     * @param SecurityContextInterface|AuthorizationChecker $authorizationChecker
+     * @param AclRepository                                 $aclRepository
      */
     public function __construct(
-        /* AuthorizationCheckerInterface */ $authorizationChecker,
+        /* AuthorizationCheckerInterface */
+        $authorizationChecker,
         ClassAceManager $classAceManager,
-        ObjectAceManager $objectAceManager
+        ObjectAceManager $objectAceManager,
+        AclRepository $aclRepository
     ) {
         $this->authorizationChecker = $authorizationChecker;
         $this->classAceManager = $classAceManager;
         $this->objectAceManager = $objectAceManager;
+        $this->aclRepository = $aclRepository;
     }
 
     /**
      * @return ClassAceManager
+     *
+     * @api
      */
     public function manageClassAces()
     {
@@ -63,6 +75,8 @@ class AclManager
 
     /**
      * @return ObjectAceManager
+     *
+     * @api
      */
     public function manageObjectAces()
     {
@@ -77,9 +91,16 @@ class AclManager
      * @param string $field
      *
      * @return bool
+     *
+     * @api
      */
     public function isGranted($attributes, $object = null, $field = null)
     {
+        if ($object) {
+            // ensure the acl is created, as otherwise class aces do not work
+            $this->aclRepository->findOrCreateAcl($object);
+        }
+
         if ($field) {
             $object = new FieldVote($object, $field);
         }

@@ -95,7 +95,8 @@ abstract class AbstractSecurityTest extends WebTestCase
     }
 
     /**
-     * Helper function for compatibility to symfony <2.6
+     * Helper function for compatibility to symfony <2.6.
+     *
      * @param $token
      */
     protected function setToken($token)
