@@ -12,6 +12,7 @@
 namespace ProjectA\Bundle\AclBundle\Tests\Security\Acl\Manager\AceManager;
 
 use ProjectA\Bundle\AclBundle\Tests\Model\AbstractSecurityTest;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
 use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 
 /**
@@ -22,6 +23,28 @@ class ClassAceManagerTest extends AbstractSecurityTest
     public function testGrantSingleMask()
     {
         $this->classmanager->grant($this->object, MaskBuilder::MASK_EDIT, $this->token);
+
+        $this->assertTrue($this->manager->isGranted('VIEW', $this->object));
+        $this->assertTrue($this->manager->isGranted('EDIT', $this->object));
+    }
+
+    public function testGrantSingleMaskObjectIdentity()
+    {
+        $fqcn = get_class($this->object);
+
+        $objectIdentity = new ObjectIdentity('class', $fqcn);
+
+        $this->classmanager->grant($objectIdentity, MaskBuilder::MASK_EDIT, $this->token);
+
+        $this->assertTrue($this->manager->isGranted('VIEW', $this->object));
+        $this->assertTrue($this->manager->isGranted('EDIT', $this->object));
+    }
+
+    public function testGrantSingleMaskClassName()
+    {
+        $fqcn = get_class($this->object);
+
+        $this->classmanager->grant($fqcn, MaskBuilder::MASK_EDIT, $this->token);
 
         $this->assertTrue($this->manager->isGranted('VIEW', $this->object));
         $this->assertTrue($this->manager->isGranted('EDIT', $this->object));
@@ -46,6 +69,34 @@ class ClassAceManagerTest extends AbstractSecurityTest
         $this->assertTrue($this->manager->isGranted('VIEW', $this->object));
 
         $this->classmanager->revoke($this->object, MaskBuilder::MASK_VIEW, $this->token);
+
+        $this->assertFalse($this->manager->isGranted('VIEW', $this->object));
+    }
+
+    public function testRevokeObjectIdentity()
+    {
+        $fqcn = get_class($this->object);
+
+        $objectIdentity = new ObjectIdentity('class', $fqcn);
+
+        $this->classmanager->grant($objectIdentity, MaskBuilder::MASK_VIEW, $this->token);
+
+        $this->assertTrue($this->manager->isGranted('VIEW', $this->object));
+
+        $this->classmanager->revoke($objectIdentity, MaskBuilder::MASK_VIEW, $this->token);
+
+        $this->assertFalse($this->manager->isGranted('VIEW', $this->object));
+    }
+
+    public function testRevokeObjectClassName()
+    {
+        $fqcn = get_class($this->object);
+
+        $this->classmanager->grant($fqcn, MaskBuilder::MASK_VIEW, $this->token);
+
+        $this->assertTrue($this->manager->isGranted('VIEW', $this->object));
+
+        $this->classmanager->revoke($fqcn, MaskBuilder::MASK_VIEW, $this->token);
 
         $this->assertFalse($this->manager->isGranted('VIEW', $this->object));
     }
